@@ -1,0 +1,1 @@
+<p class="copyright-text">Copyright &copy; <a href="http://www.walls.com">Walls</a>| All right reserved.</p>
