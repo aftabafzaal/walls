@@ -41,16 +41,6 @@
             <?php } ?>
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-dashboard"></i> <span>Categories</span> <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu" style="display: none;">
-                    <li><a href="{{ url('admin/categories') }}"><i class="fa fa-circle-o"></i> List Categories</a></li>
-                    <li><a href="{{ url('admin/categories/create') }}"><i class="fa fa-circle-o"></i> Add Category</a></li>
-                    <li><a href="{{ url('admin/categories/createSubcat') }}"><i class="fa fa-circle-o"></i> Add Sub Category</a></li>
-                </ul>
-            </li>
-            <li class="treeview">
-                <a href="#">
                     <i class="fa fa-dashboard"></i> <span>Products</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu" style="display: none;">
@@ -81,44 +71,7 @@
                     <li><a href="{{ url('admin/orders') }}"><i class="fa fa-circle-o"></i> All Orders</a></li>
                 </ul>
             </li>
-            
-            
-            <!-- 
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-dashboard"></i> <span>Contact Us</span> <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                 <!--  
-                 <ul class="treeview-menu" style="display: none;">
-                    <li><a href="{{ url('admin/contactus') }}"><i class="fa fa-circle-o"></i> All contacts</a></li>
-                </ul>
-                 
-            </li>
-                 -->
         </ul>
-        <ul class="sidebar-menu">
-            <li class="header">Blog</li>
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-dashboard"></i> <span>Categories</span> <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu" style="display: none;">
-                    <li><a href="{{ url('admin/blog/categories') }}"><i class="fa fa-circle-o"></i> List Categories</a></li>
-                    <li><a href="{{ url('admin/blog/categories/create') }}"><i class="fa fa-circle-o"></i> Add Category</a></li>
-                </ul>
-            </li>
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-dashboard"></i> <span>Posts</span> <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu" style="display: none;">
-                    <li><a href="{{ url('admin/blog/posts') }}"><i class="fa fa-circle-o"></i> List Posts</a></li>
-                    <li><a href="{{ url('admin/blog/posts/create') }}"><i class="fa fa-circle-o"></i> Add New Post</a></li>
-                </ul>
-            </li>
-        
-        </ul>
-        
         <!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->

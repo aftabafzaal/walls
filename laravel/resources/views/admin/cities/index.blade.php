@@ -10,7 +10,7 @@
         <!-- PRODUCT LIST -->
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Products( Total : {{ count($products) }} ) </h3>
+                <h3 class="box-title">Cities( Total : {{ count($cities) }} ) </h3>
 
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -23,7 +23,7 @@
                 <ul class="products-list product-list-in-box">
 
                     <?php $i = 1; ?>
-                    @foreach ($products as $row)
+                    @foreach ($cities as $row)
 
                     <?php
                     $color = ($i % 2 == 0 ? 'success' : 'info');
@@ -31,12 +31,15 @@
 
                     <li class="item">
                         <div class="product-img">
-                            <a href="edit/<?php echo $row->id ?>" class="product-title"><?php echo $row->name; ?>
-                                <br />
-                                <a href="products/delete/<?php echo $row->id ?>">Delete</a>
+                            <a href="cities/delete/<?php echo $row->id ?>">Delete</a>
+
                         </div>
+
                         <div class="product-info">
-                            <span class="label label-<?php echo $color; ?> pull-right"><?php echo $row->price; ?></span></a>
+                            <a href="cities/edit/<?php echo $row->id ?>" class="product-title"><?php echo $row->name; ?>
+                                <span class="label label-<?php echo $color; ?> pull-right"><?php echo $row->created_at; ?></span></a>
+                            
+
                         </div>
                     </li>
                     <!-- /.item -->

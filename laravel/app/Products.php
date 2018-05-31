@@ -20,7 +20,7 @@ class Products extends Model {
             $subSql.=" and p.type='".$search['type']."'";
         }
         
-        $sql="select p.id as id,p.sku as sku,p.name as name,p.image,p.teaser as teaser,p.price,p.salePrice,p.sale,p.description,p.requirments as requirments,p.keywords as keywords,u.key"
+        $sql="select p.id as id,p.sku as sku,p.name as name,p.image,p.teaser as teaser,p.price,p.salePrice,p.sale,p.description,p.keywords as keywords,u.key"
                 . " from products as `p` left join urls as u on u.type_id=p.id "
                 . "where "
                 . $subSql;

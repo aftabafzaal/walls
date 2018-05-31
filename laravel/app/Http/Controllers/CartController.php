@@ -33,6 +33,16 @@ class CartController extends Controller {
         return redirect('cart/view');
     }
 
+    
+    public function miniCart() {
+
+        $countCart = Cart::countCart($this->sessionId);
+        return view('front.cart.mini_cart',compact("countCart"));
+    }
+    
+    
+    
+    
     public function update(Request $request) {
         $post = $request->all();
 
@@ -71,74 +81,57 @@ class CartController extends Controller {
 
     public function mycart() {
 
-        $productsModel = Products::where('isMandatory', 1)->where('type', 'additional')->get();
-        $addtionalProductsModel = Products::where('isMandatory', 0)->where('type', 'additional')->get();
-
-        foreach ($productsModel as $product) {
-            $row = Cart::where('product_id', '=', $product->id)->delete();
-
-            $model = new Cart();
-            $model->product_id = $product->id;
-            $model->session_id = $this->sessionId;
-            $model->totalPrice = $product->price;
-            $model->quantity = 1;
-            $model->type = 'additional';
-            $model->save();
-        }
+        
         $countCart = Cart::countCart($this->sessionId);
-        $cart = DB::table('cart as c')
+        $cart = $this->setCart();
+                $coupon = array();
+        Session::put('cart', $cart);
+        return view('front.cart.view', compact('cart', 'products', 'coupon','countCart'));
+    }
+    
+    public function setCart(){
+         $cart = DB::table('cart as c')
                 ->where('c.session_id', '=', $this->sessionId)
-                
                 ->leftJoin('products as p', 'p.id', '=', 'c.product_id')
                 ->leftJoin('cart_product_attributes as cpa', 'cpa.cart_id', '=', 'c.id')
                 ->leftJoin('attributes as a', 'a.id', '=', 'cpa.attribute_id')
                 ->leftJoin('urls as u', 'u.type_id', '=', 'c.product_id')
-                ->select('c.id as cart_id', 'c.type as productType', 'c.quantity as quantity', 'c.totalPrice as total_price', 'p.id as product_id', 'p.type as type', 'p.isMandatory as isMandatory', 'p.name as product_name', 'p.image as image', DB::raw('group_concat(cpa.attribute_id) as attribute_id'), DB::raw('group_concat(cpa.value) as value'), DB::raw('group_concat(cpa.value_id) as value_id'),'u.key as key', DB::raw('group_concat(a.name) as attribute'))
+                ->select('c.id as cart_id', 'c.type as productType', 'c.quantity as quantity', 'c.totalPrice as total_price', 'p.id as product_id', 'p.type as type',  'p.name as product_name', 'p.image as image', DB::raw('group_concat(cpa.attribute_id) as attribute_id'), DB::raw('group_concat(cpa.value) as value'), DB::raw('group_concat(cpa.value_id) as value_id'),'u.key as key', DB::raw('group_concat(a.name) as attribute'))
                 ->groupBy('c.id')
                 ->orderBy('c.id', 'asc')
                 ->get();
-        $coupon = array();
         Session::put('cart', $cart);
-        return view('front.cart.view', compact('cart', 'products', 'coupon', 'addtionalProductsModel','countCart'));
+        return $cart;
     }
+    
+    
 
     public function add(Request $request) {
 
         $data = $request->all();
         $cart = Cart::where('product_id', $data['product_id'])->where('session_id', $this->sessionId)->first();
         $product = Products::find($data['product_id']);
+        
+        if($product->sale==1 && $product->price>$product->salePrice){
+            $price=$product->salePrice;
+        }else{
+            $price=$product->price;
+        }
+        
         if (count($cart) > 0) {
-            // $input['quantity'] = $cart->quantity + 1;
-            //   $affectedRows = Cart::where('id', $cart->id)->update($input);
+            $input['quantity'] = $cart->quantity + 1;
+            $affectedRows = Cart::where('id', $cart->id)->update($input);
         } else {
             $model = new Cart();
             $model->product_id = $data['product_id'];
             $model->session_id = $this->sessionId;
-            $model->totalPrice = $data['total_price'];
+            $model->totalPrice = $price;
             $model->quantity = $data['quantity'];
             $model->type = $product->type;
             $model->save();
             $cart_id = $model->id;
-
-            if (!empty($data['attributes'])) {
-                foreach ($data['attributes'] as $key => $valueData) {
-
-                    $check = strpos($valueData[0], '_option_');
-
-                    $model = new CartProductAttributes();
-                    $model->cart_id = $cart_id;
-                    $model->attribute_id = $key;
-                    if ($check === false) {
-                        $model->value = $valueData[0];
-                    } else {
-                        $value = explode('_option_', $valueData[0]);
-                        $model->value_id = $value[1];
-                        $model->value = $value[0];
-                    }
-                    $model->save();
-                }
-            }
         }
+        $this->setCart();
     }
 
 }

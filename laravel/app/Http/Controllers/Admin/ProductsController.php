@@ -102,26 +102,15 @@ class ProductsController extends AdminController {
         $model->name = $request->name;
         $model->price = $request->price;
         $model->sku = $request->sku;
-        $model->requirments = $request->requirments;
         $model->teaser = $request->teaser;
         $model->description = $request->description;
         $model->keywords = $request->keywords;
         $model->image = $fileName;
         $model->sale = $request->sale;
         $model->salePrice = $request->salePrice;
-        $model->priceForDoctors = $request->priceForDoctors;
         $model->type = $request->type;
         $model->save();
 
-        if (!empty($request['categories'])) {
-
-            foreach ($request['categories'] as $category_id) {
-                $categoryModel = new ProductsCategories();
-                $categoryModel->product_id = $model->id;
-                $categoryModel->category_id = $category_id;
-                $categoryModel->save();
-            }
-        }
         $input = array();
         $input['type_id'] = $model->id;
         $input['key'] = $request->key;
@@ -135,11 +124,7 @@ class ProductsController extends AdminController {
 
     public function edit($id) {
         $product = Products::findOrFail($id);
-        $selectedCategories = ProductsCategories::where('product_id', $id)->get();
-        $productsCategories = array();
-        foreach ($selectedCategories as $pc) {
-            $productsCategories[] = $pc->category_id;
-        }
+        
 
         $url = Urls::where('type', 'product')->where('type_id', $id)->first();
         if (!empty($url)) {
@@ -148,12 +133,8 @@ class ProductsController extends AdminController {
             $key = null;
         }
 
-        $allCategories = Categories::orderBy('parent_id', 'asc')->get();
-        $categories = Functions::getCategories($allCategories);
-
-
         $type = $product->type;
-        return view('admin.products.edit', compact('product', 'categories', 'productsCategories', 'type', 'key', 'url'))->with('id', $id);
+        return view('admin.products.edit', compact('product', 'type', 'key', 'url'))->with('id', $id);
     }
 
     public function update($id, Request $request) {
@@ -215,17 +196,6 @@ class ProductsController extends AdminController {
 
         $affectedRows = Products::where('id', '=', $id)->update($input);
 
-        if (!empty($request['categories'])) {
-            $productsCategories = ProductsCategories::where('product_id', $id)->delete();
-
-
-            foreach ($request['categories'] as $category_id) {
-                $categoryModel = new ProductsCategories;
-                $categoryModel->product_id = $id;
-                $categoryModel->category_id = $category_id;
-                $categoryModel->save();
-            }
-        }
         $input = array();
         $input['type_id'] = $id;
         $input['key'] = $request->key;

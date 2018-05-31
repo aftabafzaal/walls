@@ -8,7 +8,6 @@ use App\Products;
 use App\ProductsCategories;
 use App\Content;
 use App\States;
-use App\LabsLocations;
 use Illuminate\Http\Request;
 use App\Functions\Functions;
 use App\User;

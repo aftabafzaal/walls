@@ -58,6 +58,8 @@ Route::get('cart/view', 'CartController@mycart');
 Route::get('cart/', 'CartController@mycart');
 Route::get('cart/delete/{id}', 'CartController@delete');
 Route::get('cart/update', 'CartController@update');
+Route::get('mini-cart', 'CartController@miniCart');
+
 Route::get('checkout', 'CheckoutController@index');
 Route::post('postOrder', 'CheckoutController@order');
 Route::get('checkout/success/{id}', 'CheckoutController@success');
@@ -65,9 +67,7 @@ Route::get('checkout/fail', 'CheckoutController@fail');
 Route::get('success/{id}', 'SignupController@success');
 Route::get('mycart', 'CartController@index');
 Route::get('profile', 'ProfileController@index');
-Route::get('clients', 'ClientsController@index');
-Route::get('admin/client/{id}', 'ClientsController@userDetail');
-Route::post('admin/clientOrderStatus', 'ClientsController@ordersBystatus');
+
 
 Route::get('connect', 'SignupController@doctors_login');
 Route::get('login', 'SignupController@index');
@@ -84,6 +84,8 @@ Route::get('profile', 'CustomersController@profile');
 Route::post('updateprofile', 'CustomersController@updateprofile');
 Route::post('coupons/apply', 'CouponsController@apply');
 
+Route::get('get-bundle-products', 'ProductsController@getbundleproducts');
+
 Route::group(
         array('prefix' => 'paypal'), function() {
     $folder = "Payments\\";
@@ -99,14 +101,6 @@ Route::group(
     Route::get('cancel', $folder . 'CheckController@cancel');
 }
 );
-
-Route::get('blog', 'BlogController@index');
-Route::get('blog/{key}', 'BlogController@index');
-Route::get('blog/post/{key}', 'BlogController@post');
-
-Route::get('test/document', 'TestController@index');
-Route::get('test/results', 'TestController@results');
-Route::get('test/acknowledgement', 'TestController@acknowledgement');
 
 Route::group(
         array('prefix' => 'admin'), function() {

@@ -49,7 +49,5 @@
         <script src="{{ asset('/front/js/site.js') }}"></script>
         <script src="{{ asset('/front/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('/front/js/viewportchecker.js') }}"></script>
-        <script src="{{ asset('/front/js/kodeized.js') }}"></script>
-        <script src='https://www.google.com/recaptcha/api.js'></script>
     </body>
 </html>
