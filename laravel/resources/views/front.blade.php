@@ -14,18 +14,18 @@
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
         <!-- Fonts -->
-        <!-- Source Sans Pro -->
+        <!-- Source Sans Pro 
         <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400i|Source+Sans+Pro:300,400,600,700" rel="stylesheet">
 
         <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700" rel="stylesheet">
-
+-->
         <!-- CSS -->
 
-        <!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
-        <!-- Bootstrap CDN -->
+        <link rel="stylesheet" href="{{ asset('frontlte/css/bootstrap.min.css')}}">
+        <!-- Bootstrap CDN 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
 
-
+-->
         <link rel="stylesheet" href="{{ asset('frontlte/css/themefisher-fonts.css')}}">
         <link rel="stylesheet" href="{{ asset('frontlte/css/owl.carousel.css')}}">
 

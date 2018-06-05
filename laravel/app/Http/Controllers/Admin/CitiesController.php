@@ -9,7 +9,7 @@ use Validator,
     Redirect;
 use Auth;
 use App\Cities;
-use Session;
+use App\States;
 use Illuminate\Http\Request;
 
 class CitiesController extends AdminController {
@@ -19,28 +19,30 @@ class CitiesController extends AdminController {
     }
 
     public function index() {
-        $posts = Cities::orderBy('name', 'asc')->get();
-        return view('admin.cities.posts.index', compact('posts'));
+        $model = Cities::orderBy('title', 'asc')->get();
+        return view('admin.cities.index', compact('model'));
     }
 
     public function create() {
-        $categories = BlogCategories::lists('name', 'id');
-        $productsCategories = array();
-        return view('admin.cities.posts.create', compact('categories', 'productsCategories'));
+        $states = States::lists('title', 'code');
+        $cityState = array();
+        return view('admin.cities.create', compact('states', 'productsCategories'));
     }
 
     public function insert(Request $request) {
         $validator = Validator::make($request->all(), [
-                    'name' => 'required|max:150|unique:cities',
-                    
+                    'title' => 'required|max:50|unique:cities',
+                    'state_id' => 'required',
         ]);
 
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
+        
         $model = new Cities;
-        $model->name = $request->name;
+        $model->title = $request->title;
+        $model->state_id = $request->state_id;
         $model->save();
         \Session::flash('success', 'City added successfully!');
         return redirect('admin/cities');
@@ -52,9 +54,9 @@ class CitiesController extends AdminController {
     }
 
     public function edit($id) {
-        $post = Cities::findOrFail($id);
-        $categories = BlogCategories::lists('name', 'id');
-        return view('admin.cities.posts.edit', compact('post', 'categories'))->with('id', $id);
+        $model = Cities::findOrFail($id);
+        $states = States::lists('title', 'code');
+        return view('admin.cities.edit', compact('states', 'model'))->with('id', $id);
     }
 
     public function update($id, Request $request) {
@@ -70,12 +72,12 @@ class CitiesController extends AdminController {
         $affectedRows = Cities::where('id', '=', $id)->update($input);
 
         \Session::flash('message', 'Post updated successfully!');
-        return redirect('admin/cities/posts');
+        return redirect('admin/cities');
     }
 
     public function delete($id) {
         $row = Cities::where('id', '=', $id)->delete();
-        return redirect('admin/cities/posts');
+        return redirect('admin/cities');
     }
 
 }

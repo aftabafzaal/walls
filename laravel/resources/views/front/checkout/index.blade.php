@@ -41,7 +41,7 @@ list($year, $month, $date) = explode('-', $user->dob);
                 <h3><mark>1</mark> Patient's Information</h3>
                 <div class="patient col-sm-12">
                     <input type="checkbox" name="is_different" id="is_different" >
-                    Patient information different from my information.
+                    Shipping information different from my information.
                 </div>
                 <div class="form-group col-sm-6">
                     <h5>{!! Form::label('firstName', 'First Name *') !!}</h5>
@@ -55,34 +55,6 @@ list($year, $month, $date) = explode('-', $user->dob);
                     <h5>{!! Form::label('email', 'Email *') !!}</h5>
                     {!! Form::text('email', $user->email , array('class' => 'form-control','placeholder' => 'Email *','id' => 'email') ) !!}
                 </div>
-                <div class="form-group col-sm-6">
-                    <h5>{!! Form::label('gender', 'Gender *') !!}</h5>
-                    <div class="inline-form">
-                        {!! Form::radio('gender', 'm', true) !!}
-                        {!! Form::label('Male', 'Male') !!}
-                        {!! Form::radio('gender', 'f') !!}
-                        {!! Form::label('Female', 'Female') !!}
-                    </div>
-                </div>
-
-                <div class="form-group col-sm-12 clrhm">
-                    <h5>{!! Form::label('dob', 'Date of birth *') !!}</h5>
-                    <div class="form-group col-sm-2 clrhm pl0">
-                        <h5>{!! Form::label('date') !!}</h5>
-                        {!! Form::selectRange('date',1,31,$date,['class' => 'form-control',$required]) !!}
-                    </div>
-
-                    <div class="form-group col-sm-4 clrhm">
-                        <h5>{!! Form::label('month') !!}</h5>
-                        {!! Form::selectMonth('month',$month, ['class' => 'form-control',$required]) !!}
-                    </div>
-                    <div class="form-group col-sm-3 clrhm">
-                        <h5>{!! Form::label('year') !!}</h5>
-                        {!! Form::selectRange('year',2016,1930,$year,['class' => 'form-control',$required])!!}
-                    </div>
-
-                </div>
-
                 <div class="form-group col-sm-12">
                     <h5>{!! Form::label('Address Line 1 *') !!}</h5>
                     {!! Form::text('address1', $address->address , array('class' => 'form-control','placeholder' => 'Street Address *','id' => 'address1',$required) ) !!}
@@ -93,10 +65,10 @@ list($year, $month, $date) = explode('-', $user->dob);
                     {!! Form::text('address2', $address->address2 , array('class' => 'form-control','placeholder' => 'Appartment.Suite (Optional)','id' => 'address2') ) !!}
                 </div>
                 <div class="form-group col-sm-12 ">
-                    <h5>{!! Form::label('Country *') !!}</h5>
-                    {!! Form::select('country_id', 
-                    $countries, 
-                    230, 
+                    <h5>{!! Form::label('State *') !!}</h5>
+                    {!! Form::select('state', 
+                    $states, 
+                    null, 
                     ['class' => 'form-control',$required]) !!}
                 </div>
                 <div class="form-group col-sm-6 ">

@@ -14,7 +14,7 @@ use App\User;
 use App\Orders;
 use App\Address;
 use Config;
-use App\Countries;
+use App\States;
 use App\OrdersProducts;
 use App\ProductsCategories;
 use App\OrdersBundles;
@@ -53,8 +53,7 @@ class CheckoutController extends Controller {
         $userId = Auth::user()->id;
         $user = User::findOrFail($userId);
         $address = Address::where('user_id', '=', $userId)->first();
-        $countries = Countries::lists('name', 'id');
-
+        $states = States::lists('title', 'code');
 
         if (empty($address)) {
             $address = new Address();
@@ -72,7 +71,7 @@ class CheckoutController extends Controller {
             return redirect("/");
         }
 
-        return view('front.checkout.index', compact('countries', 'user', 'cart', 'address'));
+        return view('front.checkout.index', compact('states', 'user', 'cart', 'address'));
     }
 
     public function order(Request $request) {

@@ -109,6 +109,12 @@ Route::group(
     Route::get('/', $admin . 'HomeController@index');
     Route::get('home', $admin . 'HomeController@index');
 
+    Route::get('users', $admin . 'UsersController@index');
+    Route::get('user/{id}', $admin . 'UsersController@userDetail');
+    Route::get('user/make-manager/{id}', $admin . 'UsersController@makemanager');
+    Route::get('user/remove-manager/{id}', $admin . 'UsersController@removemanager');
+    
+    
     Route::get('categories', $admin . 'CategoriesController@index');
     Route::get('categories/create', $admin . 'CategoriesController@create');
     Route::get('categories/createSubcat', $admin . 'CategoriesController@create_sub_cat');
@@ -148,18 +154,19 @@ Route::group(
     Route::get('orders/results/delete/{id}', $admin . 'OrdersresultsController@delete');
     Route::get('order/delete/{id}', $admin . 'OrdersController@delete');
 
-    Route::get('blog/categories', $admin . 'BlogCategoriesController@index');
-    Route::get('blog/categories/create', $admin . 'BlogCategoriesController@create');
-    Route::post('blog/categories/insert', $admin . 'BlogCategoriesController@insert');
-    Route::get('blog/categories/delete/{id}', $admin . 'BlogCategoriesController@delete');
-    Route::get('blog/categories/edit/{id}', $admin . 'BlogCategoriesController@edit');
-    Route::post('blog/categories/update/{id}', $admin . 'BlogCategoriesController@update');
+    Route::get('cities', $admin . 'CitiesController@index');
+    Route::get('cities/create', $admin . 'CitiesController@create');
+    Route::post('cities/insert', $admin . 'CitiesController@insert');
+    Route::get('cities/delete/{id}', $admin . 'CitiesController@delete');
+    Route::get('cities/edit/{id}', $admin . 'CitiesController@edit');
+    Route::post('cities/update/{id}', $admin . 'CitiesController@update');
 
-    Route::get('blog/posts', $admin . 'BlogPostsController@index');
-    Route::get('blog/posts/create', $admin . 'BlogPostsController@create');
-    Route::post('blog/posts/insert', $admin . 'BlogPostsController@insert');
-    Route::get('blog/posts/delete/{id}', $admin . 'BlogPostsController@delete');
-    Route::get('blog/posts/edit/{id}', $admin . 'BlogPostsController@edit');
-    Route::post('blog/posts/update/{id}', $admin . 'BlogPostsController@update');
+
+    Route::get('areas', $admin . 'AreasController@index');
+    Route::get('areas/create', $admin . 'AreasController@create');
+    Route::post('areas/insert', $admin . 'AreasController@insert');
+    Route::get('areas/delete/{id}', $admin . 'AreasController@delete');
+    Route::get('areas/edit/{id}', $admin . 'AreasController@edit');
+    Route::post('areas/update/{id}', $admin . 'AreasController@update');
 }
 );

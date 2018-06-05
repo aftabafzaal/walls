@@ -29,11 +29,11 @@
             <?php if (Auth::user()->role->role == 'admin') { ?>
 
                 <li class="treeview">
-                    <a href="{{ url('/clients') }}">
+                    <a href="{javascript:void(0);">
                         <i class="fa fa-dashboard"></i> <span>Users</span> <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu" style="display: none;">
-                        <li class="active"><a href="{{ url('/clients') }}"><i class="fa fa-user"></i> <span>Users</span></a></li>
+                        <li class="active"><a href="{{ url('admin/users') }}"><i class="fa fa-user"></i> <span>Users</span></a></li>
                        
                     </ul>
                 </li>
@@ -50,6 +50,24 @@
                     <li><a href="{{ url('admin/products/create?type=simple') }}"><i class="fa fa-circle-o"></i> Add New Product</a></li>
                     <li><a href="{{ url('admin/products/create?type=bundle') }}"><i class="fa fa-circle-o"></i> Add Bundle Product</a></li>
 
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-dashboard"></i> <span>Cities</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu" style="display: none;">
+                    <li><a href="{{ url('admin/cities') }}"><i class="fa fa-circle-o"></i>List Cities</a></li>
+                    <li><a href="{{ url('admin/cities/create') }}"><i class="fa fa-circle-o"></i> Add New City</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-dashboard"></i> <span>Areas</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu" style="display: none;">
+                    <li><a href="{{ url('admin/areas') }}"><i class="fa fa-circle-o"></i>List Areas</a></li>
+                    <li><a href="{{ url('admin/areas/create') }}"><i class="fa fa-circle-o"></i> Add New Area</a></li>
                 </ul>
             </li>
             

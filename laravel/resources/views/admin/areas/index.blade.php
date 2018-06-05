@@ -10,7 +10,7 @@
         <!-- PRODUCT LIST -->
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Cities( Total : {{ count($model) }} ) </h3>
+                <h3 class="box-title">Areas( Total : {{ count($model) }} ) </h3>
 
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -31,12 +31,12 @@
 
                     <li class="item">
                         <div class="product-img">
-                            <a href="cities/delete/<?php echo $row->id ?>">Delete</a>
+                            <a href="areas/delete/<?php echo $row->id ?>">Delete</a>
 
                         </div>
 
                         <div class="product-info">
-                            <a href="cities/edit/<?php echo $row->id ?>" class="product-title"><?php echo $row->title; ?>
+                            <a href="areas/edit/<?php echo $row->id ?>" class="product-title"><?php echo $row->title; ?>
                                 <span class="label label-<?php echo $color; ?> pull-right"><?php echo $row->created_at; ?></span></a>
                             
 

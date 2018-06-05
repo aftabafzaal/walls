@@ -38,7 +38,7 @@
                                 <td><?php echo ucfirst($row->role); ?></td>
                                 <td><?php echo $row->email; ?></td>
                                 <td><?php echo date("d M Y", strtotime($row->created_at)); ?></td>
-                                <td><a href="admin/client/{{$row->id}}">Detail</a></td>
+                                <td><a href="user/{{$row->id}}">Detail</a></td>
                             </tr>
                             <?php $i++; ?>
                             @endforeach
@@ -47,7 +47,11 @@
 
                     </table>
                 </ul>
+                <div class="col-md-12">
+                    <?php echo $model->appends([])->render(); ?>
+                </div>
             </div>
+
 
         </div>
     </div>

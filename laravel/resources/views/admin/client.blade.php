@@ -29,6 +29,13 @@ $orderPrefix = Config::get('params.order_prefix');
                 <div class="col-lg-6 col-md-6 col-md-6">
                     <div class="box-header with-border">
                         <h3 class="box-title"> Address Information</h3>
+                        <div class="box-tools pull-right">
+                            <?php if($data[0]->role_id==2){?>
+                            <a class="btn btn-info" href="{{url("admin/user/make-manager")}}/<?php echo $data[0]->id;?>"> Make Area manager</a>
+                            <?php }elseif($data[0]->role_id==3){ ?>
+                            <a class="btn btn-info" href="{{url("admin/user/remove-manager")}}/<?php echo $data[0]->id;?>"> Remove as Area manager</a>
+                            <?php }?>
+                        </div> 
                     </div>
                     <div class="row">
                         <ul>

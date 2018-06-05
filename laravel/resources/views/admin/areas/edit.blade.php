@@ -16,8 +16,8 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                {!! Form::model($model, ['files' => true,'class' => 'form','url' => ['admin/cities/update', $model->id], 'method' => 'post']) !!}
-                 @include('admin.cities.form')
+                {!! Form::model($model, ['files' => true,'class' => 'form','url' => ['admin/areas/update', $model->id], 'method' => 'post']) !!}
+                 @include('admin.areas.form')
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block btn-flat">Save</button>
                 </div>

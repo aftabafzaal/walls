@@ -12,18 +12,21 @@
             </div>
             @endif
             <div class="box-header with-border">
-                <h3 class="box-title">Edit City</h3>
+                <h3 class="box-title">Add New City</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                {!! Form::model($model, ['files' => true,'class' => 'form','url' => ['admin/cities/update', $model->id], 'method' => 'post']) !!}
-                 @include('admin.cities.form')
+                {!! Form::open(array( 'class' => 'form','url' => 'admin/areas/insert', 'files' => true)) !!}
+                @include('admin.areas.form')
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block btn-flat">Save</button>
                 </div>
                 </form>
             </div>
+            <!-- /.box-body -->
         </div>
+        <!-- /.box -->
     </div>
 </div>
+<sc
 @endsection
