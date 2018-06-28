@@ -1,4 +1,4 @@
-@extends('login_signup')
+@extends('front')
 
 @section('content')
 
