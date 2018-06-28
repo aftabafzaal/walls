@@ -1,52 +1,64 @@
+<header>
+    <section class="hdr-area  hdr-nav  bg-cvr" style="background-image:url('{{ asset('front/images/header.png') }}')">
+        <div class="container">
+            <nav class="navbar navbar-default" role="navigation" id="slide-nav">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand animated rubberBand delay2s" href="{{url('/')}}"><img src="{{ asset('front/images/logo.png') }}" alt="logo" class="broken-image"/></a>
+                    </div>
 
-<div class="container">
-    <nav class="navbar navigation " id="top-nav">
-        <a class="navbar-brand logo" href="#">
-            <h1><a href="{{url('/')}}"  class="navbar-brand" ><img height="120" src="{{ asset('frontlte/images/logo.png') }}" alt="Logo" />
-                        </a></h1>
-        </a>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div id="slidemenu">
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav navbar-main fl">
 
-        <button class="navbar-toggler hidden-lg-up float-lg-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" >
-            <i class="tf-ion-android-menu"></i>
-        </button>
-        <div class="collapse navbar-toggleable-md" id="navbarResponsive">
-            <ul class="nav navbar-nav menu float-lg-right" id="top-nav">
-                <li class=" active">
-                    <a href="#">HOME</a>
-                </li>
-                <li class="">
-                    <a href="{{ url('shop')}}">Shop</a>
-                </li>
-                <li class="">
-                    <a href="#service">SERVICES</a>
-                </li>
-                <li class="">
-                    <a href="#contact">CONTACT</a>
-                </li>
-                <?php
-                if (isset(Auth::user()->id)) {
-                    ?>
-                    <li class=""><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ url('myorders')}}" class="pagelinkcolor">My Orders</a></li>
-                            <li><a href="{{ url('changepassword')}}" class="pagelinkcolor">Change Password</a></li>
-                            <li><a href="{{ url('profile')}}" class="pagelinkcolor">Profile</a></li>
-                            <li><a href="{{ url('auth/logout')}}" class="pagelinkcolor">Log Out</a></li>
-                        </ul>
-                    </li>
-                    <?php
-                } else {
-                    ?>
-                    <li class="login-link"><a href="{{url('login')}}">Login</a></li>
+                                <li><a href="#!3">Home</a></li>
+                                <li><a href="#!6">About</a></li>
+                                <li><a href="{{ url('shop')}}">Build your own Basket</a></li>
+                                <li><a href="#bundle_products">Bundles</a></li>
+                            </ul>
 
-                    <?php
-                }
-                ?>
+                            <ul class="nav navbar-nav fr ml50">
+                                <?php
+                                if (isset(Auth::user()->id)) {
+                                    ?>
+                                    <li class=""><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account<span class="caret"></span></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ url('myorders')}}" class="pagelinkcolor">My Orders</a></li>
+                                            <li><a href="{{ url('changepassword')}}" class="pagelinkcolor">Change Password</a></li>
+                                            <li><a href="{{ url('profile')}}" class="pagelinkcolor">Profile</a></li>
+                                            <li><a href="{{ url('auth/logout')}}" class="pagelinkcolor">Log Out</a></li>
+                                        </ul>
+                                    </li>
 
-                <li class="cart-item" id="mini_cart">
-                    
-                </li>
-            </ul>
+                                    <?php
+                                } else {
+                                    ?>
+                                    <li><a href="{{ url('login')}}"><i class="icon"><img src="{{ asset('front/images/icon-user.png') }}" alt="" /></i></a></li>
+
+                                    <?php
+                                }
+                                ?>
+                                <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" ><i class="icon"><img src="{{ asset('front/images/icon-cart.png') }}" alt="" /></i></a>
+                                    <ul>
+                                    <li class="cart-item" id="mini_cart">
+
+                                    </li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                        </div> 
+                    </div>
+                </div> 
+            </nav>
         </div>
-    </nav>
-</div>
+    </section>
+</header>

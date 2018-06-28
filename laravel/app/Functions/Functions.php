@@ -55,7 +55,13 @@ class Functions {
 
     public static function sendEmail($email, $subject, $body, $header = '', $from = "customerservice@newcenturylabs.com", $cc = "", $bcc = "") {
 
-
+        if(env('APP_ENV')=='local'){
+            return false;
+        }
+        
+        
+        
+        
         $data['to'] = $email;
         $data['body'] = $body;
         $data['subject'] = $subject;
@@ -65,10 +71,10 @@ class Functions {
         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
         $headers .= 'From: <' . $from . '>' . "\r\n";
         // $headers .= 'Cc: myboss@example.com' . "\r\n";
-        //return mail($email, $subject, $body, $headers);
+        return mail($email, $subject, $body, $headers);
 
-
-        return Mail::send('emails.template', $data, function($message) use ($data) {
+        
+        /* return Mail::send('emails.template', $data, function($message) use ($data) {
                     $message->SMTPOptions = array('ssl' => array('verify_peer' => false,
                             'verify_peer_name' => false,
                             'allow_self_signed' => true
@@ -76,7 +82,7 @@ class Functions {
                     );
                     $message->to($data['to'])->subject($data['subject']);
                 });
-
+                */
 
 
         // $body = "<title></title><style></style></head><body>" . $body . "</body></html>";

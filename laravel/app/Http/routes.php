@@ -85,6 +85,8 @@ Route::post('updateprofile', 'CustomersController@updateprofile');
 Route::post('coupons/apply', 'CouponsController@apply');
 
 Route::get('get-bundle-products', 'ProductsController@getbundleproducts');
+Route::get('get-featured-products', 'ProductsController@getFeaturedProducts');
+Route::get('get-popular-products', 'ProductsController@getPopularProducts');
 
 Route::group(
         array('prefix' => 'paypal'), function() {

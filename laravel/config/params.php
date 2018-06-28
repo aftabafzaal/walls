@@ -17,7 +17,7 @@ return [
             'email'=>'Email',
             'block'=>'Block',
     ],
-    'order_prefix'=>"ncl",
+    'order_prefix'=>"walls",
     'password_pattern' => '(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}',
     'keywords' => 'test',
     'meta_description'=>''

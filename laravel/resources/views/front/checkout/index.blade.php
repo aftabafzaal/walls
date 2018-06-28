@@ -2,266 +2,252 @@
 @section('content')
 <?php
 $currency = Config::get('params.currency');
-$required = "required";
-
-list($year, $month, $date) = explode('-', $user->dob);
+$required = "'required'";
 ?>
-<section class="bnr-area page-bnr-area bg-full bg-cntr valigner" style="background-image:url('{{ asset('front/images/bnr-checkout.jpg') }}');">
+
+<div id="fh5co-contact" class="__web-inspector-hide-shortcut__ ">
     <div class="container">
-        <div class="bnr__cont valign white text-center col-sm-12 text-uppercase anime-flipInX">
-            <h2>Checkout</h2>
-            <h4></h4>
-        </div>
-    </div>
-</section>
-
-{!! Form::open(array( 'class' => 'form','id' => 'form','url' => 'postOrder', 'name' => 'checkout')) !!}
-<section class="billing-area pt50">
-    <div class="container">
-        @if (count($errors->checkout) > 0)
-        <span><div class="alert alert-danger">
-                <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                <ul>
-                    @foreach ($errors->checkout->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div></span>
-        @endif
-
-        <div style="display: none;" class="payment-errors alert alert-danger"></div>
-
-
-        @if (!isset($user->id))
-        <div class="billing__info-bar p20 bdr1">Returning Customer? <a href="{{url('login')}}">Click here to login</a></div>
-        @endif
-
-        <div class="address col-sm-6">
-            <div class="patient col-sm-12  fom-shad">
-                <h3><mark>1</mark> Patient's Information</h3>
-                <div class="patient col-sm-12">
-                    <input type="checkbox" name="is_different" id="is_different" >
-                    Shipping information different from my information.
-                </div>
-                <div class="form-group col-sm-6">
-                    <h5>{!! Form::label('firstName', 'First Name *') !!}</h5>
-                    {!! Form::text('firstName', $user->firstName , array('class' => 'form-control','placeholder' => 'First Name *','id' => 'firstName',$required) ) !!}
-                </div>
-                <div class="form-group col-sm-6">
-                    <h5>{!! Form::label('lastName', 'Last Name *') !!}</h5>
-                    {!! Form::text('lastName', $user->lastName , array('class' => 'form-control','placeholder' => 'Last Name *','id' => 'lastName',$required) ) !!}
-                </div>
-                <div class="form-group col-sm-6">
-                    <h5>{!! Form::label('email', 'Email *') !!}</h5>
-                    {!! Form::text('email', $user->email , array('class' => 'form-control','placeholder' => 'Email *','id' => 'email') ) !!}
-                </div>
-                <div class="form-group col-sm-12">
-                    <h5>{!! Form::label('Address Line 1 *') !!}</h5>
-                    {!! Form::text('address1', $address->address , array('class' => 'form-control','placeholder' => 'Street Address *','id' => 'address1',$required) ) !!}
-                </div>
-
-                <div class="form-group col-sm-12">
-                    <h5>{!! Form::label('Address Line 2') !!}</h5>
-                    {!! Form::text('address2', $address->address2 , array('class' => 'form-control','placeholder' => 'Appartment.Suite (Optional)','id' => 'address2') ) !!}
-                </div>
-                <div class="form-group col-sm-12 ">
-                    <h5>{!! Form::label('State *') !!}</h5>
-                    {!! Form::select('state', 
-                    $states, 
-                    null, 
-                    ['class' => 'form-control',$required]) !!}
-                </div>
-                <div class="form-group col-sm-6 ">
-                    <h5>{!! Form::label('state *') !!}</h5>
-                    {!! Form::text('state', $address->state , array('class' => 'form-control','placeholder' => 'State / Region *','id' => 'state',$required) ) !!}
-
-                </div>
-                <div class="form-group col-sm-6">
-                    <h5>{!! Form::label('city *') !!}</h5>
-                    {!! Form::text('city', $address->city , array('class' => 'form-control','placeholder' => 'Town / City *','id' => 'city',$required) ) !!}
-                </div>
-                <div class="form-group col-sm-6">
-                    <h5>{!! Form::label('zip *') !!}</h5>
-                    {!! Form::text('zip', $address->zip , array('class' => 'form-control','placeholder' => 'Postal Code / Zipcode *','id' => 'zip',$required) ) !!}
-                </div>
-                <div class="form-group col-sm-6">
-                    <h5>{!! Form::label('phone *') !!}</h5>
-                    {!! Form::text('phone', $address->phone , array('class' => 'form-control','placeholder' => 'Phone *','id' => 'phone',$required) ) !!}
-                </div>
-
-
-            </div>
-        </div>
-
-        <div class="col2 col-sm-6">
-
-            <div class="order-summary col-sm-12  fom-shad mb30">
-
-                <h3><mark>2</mark>  Order Summary</h3>
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>LAB TEST</th>
-                            <th>TOTAL</th>
-                        </tr>
-                    </thead>
-
-                    {{--*/ $sum = 0 /*--}}
-                    @foreach ($cart as $product)
-                    {{--*/ $sum = $sum+($product->total_price*$product->quantity)  /*--}}
-                    <tr>
-                        <td>{{$product->product_name}} ({{$product->quantity}}) </td>
-                        <td>{{ $currency[Config::get('params.currency_default')]['symbol']}}{{$product->total_price}}</td>
-                    </tr>
-                    @endforeach
-                    <tr class="h4">
-                        <td>Total</td>
-                        <td>{{ $currency[Config::get('params.currency_default')]['symbol']}}{{$sum}}</td
-                    </tr>
-                </table>
-            </div>
-
-
-            <div class="payment-info col-sm-12  fom-shad mb30">
-                <h3><mark>3</mark> Payment Information</h3>
-                <div class="form-group" id="cc-group">
-                    <!--
-                    4242424242424242
-                    -->
-                    {!! Form::label('cc', 'Credit card number:') !!}
-
-                    {!! Form::text('cc',null , [
-
-                    'class'                         => 'form-control',
-                    'required'                      => 'required',
-                    'data-stripe'                   => 'number',
-                    'data-parsley-type'             => 'number',
-                    'maxlength'                     => '16',
-                    'data-parsley-trigger'          => 'change focusout',
-                    'data-parsley-class-handler'    => '#cc-group'
-
-                    ]) !!}
-
-                </div>
-
-                <div class="form-group" id="ccv-group">
-                    {!! Form::label('CVC', 'CVC (3 or 4 digit number):') !!}
-                    {!! Form::text('cvc', null, ['class'=> 'form-control','required'=> 'required','data-stripe'=> 'cvc','data-parsley-type'=> 'number','data-parsley-trigger'=>'change focusout','maxlength'=> '4','data-parsley-class-handler'=> '#ccv-group']) !!}
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group" id="exp-m-group">
-                            {!! Form::label('expMonth', 'Ex. Month') !!}
-                            {!! Form::selectMonth('expMonth', 11, ['class'=> 'form-control','required'              => 'required','data-stripe'=> 'exp-month'],'%m') !!}
+        <div class="row">
+            <div class="container-fluid ">
+                <div class="checkout-back">
+                    {!! Form::open(array( 'class' => 'form','url' => 'postOrder', 'name' => 'checkout')) !!}
+                    <div class="checkout__main col-sm-8">
+                        @if (count($errors->checkout) > 0)
+                        <div class="alert alert-danger">
+                            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                            <ul>
+                                @foreach ($errors->checkout->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
                         </div>
-                    </div>
-
-                    <div class="col-md-6">
-
-                        <div class="form-group" id="exp-y-group">
-                            {!! Form::label('expYear', 'Ex. Year') !!}
-                            {!! Form::selectYear('expYear', date('Y'), date('Y') + 10, null, ['class'=>'form-control',$required,'data-stripe'=>'exp-year']) !!}
+                        @endif
+                        <div id="billing_information" class="billing_information">
+                            <div class="hed"><h2>Billing <span>Information</span></h2></div>
+                            <div class="form-group col-sm-6">
+                                {!! Form::label('First Name') !!}
+                                {!! Form::text('billingFirstName', $user->firstName , array('class' => 'form-control',$required) ) !!}
+                            </div>
+                            <div class="form-group col-sm-6">
+                                {!! Form::label('Last Name') !!}
+                                {!! Form::text('billingLastName', $user->lastName , array('class' => 'form-control',$required) ) !!}
+                            </div>
+                            <div class="form-group col-sm-6">
+                                {!! Form::label('email') !!}
+                                {!! Form::text('billingEmail',  $user->email , array('class' => 'form-control',$required) ) !!}
+                            </div>
+                            <div class="form-group col-sm-6">
+                                {!! Form::label('state') !!}
+                                <select <?php echo $required ?> class="form-control" name="billingState" id="billingState">
+                                    <option value="">State / Region</option>
+                                    @foreach ($states as $state)
+                                    <option value="{{ $state->code }}"
+                                            @if($state->code == $address->state) selected @endif> {{ $state->title }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                {!! Form::label('city') !!}
+                                {!! Form::text('billingCity', $address->city , array('class' => 'form-control',$required) ) !!}
+                            </div>
+                            <div class="form-group col-sm-12">
+                                {!! Form::label('address line 1') !!}
+                                {!! Form::text('billingAddress1', $address->address , array('class' => 'form-control',$required) ) !!}
+                            </div>
+                            <div class="form-group col-sm-12">
+                                {!! Form::label('address line 2') !!}
+                                {!! Form::text('billingAddress2', null , array('class' => 'form-control','') ) !!}
+                            </div>
+                            <div class="form-group col-sm-6">
+                                {!! Form::label('Zip') !!}
+                                {!! Form::text('billingZip', $address->zip , array('class' => 'form-control',$required) ) !!}
+                            </div>
+                            <div class="form-group col-sm-6">
+                                {!! Form::label('phone') !!}
+                                {!! Form::text('billingPhone', $address->phone , array('class' => 'form-control',$required) ) !!}
+                            </div>
+                            <div class="form-group col-sm-12 brackets--no">
+                                {!! Form::checkbox('isShippingDifferent',1,false,['id'=>'is_shipping_different']); !!}
+                                Shipping address is different from billing. 
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
+                        <div id="shipping_information" class="billing_information" style="display: none;">
+                            <div class="hed"><h2>Shipping <span>Information</span></h2></div>
+                            <div class="form-group col-sm-6">
+                                {!! Form::label('firstName') !!}
+                                {!! Form::text('shippingFirstName', $user->firstName , array('class' => 'form-control',$required) ) !!}
+                            </div>
+                            <div class="form-group col-sm-6">
+                                {!! Form::label('lastName') !!}
+                                {!! Form::text('shippingLastName', $user->lastName , array('class' => 'form-control','') ) !!}
+                            </div>
+                            <div class="form-group col-sm-6">
+                                {!! Form::label('country', 'Country *') !!}
+                                <select name="shippingCountry" id="shippingCountry" class="form-control">
+                                    <option >Country *</option>
+                                    @foreach($countries as $country)
+                                    <option value="{{ $country->id }}"
+                                            @if($country->id== $address->country) selected @endif > {{ $country->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                {!! Form::label('state') !!}
+                                <select <?php echo $required ?> class="form-control" name="shippingState" id="shippingState">
+                                    <option value="">State / Region</option>
+                                    @foreach ($states as $state)
+                                    <option value="{{ $state->id }}"
+                                            @if($state->code == $address->state) selected @endif> {{ $state->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                {!! Form::label('city') !!}
+                                {!! Form::text('shippingCity', $address->city , array('class' => 'form-control','') ) !!}
+                            </div>
+                            <div class="form-group col-sm-6">
+                                {!! Form::label('address line 1') !!}
+                                {!! Form::text('shippingAddress1', $address->address , array('class' => 'form-control','') ) !!}
+                            </div>
+                            <div class="form-group col-sm-6">
+                                {!! Form::label('address line 2') !!}
+                                {!! Form::text('shippingAddress2', null , array('class' => 'form-control','') ) !!}
+                            </div>
+                            <div class="form-group col-sm-6">
+                                {!! Form::label('zip') !!}
+                                {!! Form::text('shippingZip', $address->phone , array('class' => 'form-control',$required) ) !!}
+                            </div>
+                            <div class="form-group col-sm-6">
+                                {!! Form::label('phone') !!}
+                                {!! Form::text('shippingPhone', $address->phone , array('class' => 'form-control',$required) ) !!}
+                            </div>
+                        </div>
 
-            <div class="payment-info col-sm-12 fom-shad mb30">
-                <div class="form-group">
-                    <h3><mark>4</mark>  Additional Message</h3>
-                    {!! Form::textarea('message', null, ['size' => '105x7','class' => 'form-control']) !!} 
+                        <div class="clearfix"></div>
+                        <div id="payment_information" class="billing_information">
+                            <div class="form-group col-sm-8">
+                                {!! Form::label('Additional Message') !!}
+                                {!! Form::textarea('message', null, ['size' => '105x3','class' => 'form-control',$required]) !!} 
+                                <span><p><strong>Note:</strong> This form submission could take <b>20 seconds</b> or longer, so keep patience!</p></span>
+                            </div>
+                            <div class="form-group col-sm-12 brackets--no"><button type="submit" class="btn btn-primary">Order Now</button></div>
+                        </div>  
+                    </div>  
+
+                    <div class="checkout__sidebar col-sm-4">
+                        <div class="order-cont clrlist listview overload">
+                            <div class="hed"><h3>Order <span>Summary</span></h3></div>
+                            <ul>
+                                {{--*/ $sum = 0 /*--}}
+                                @foreach ($cart as $product)
+                                {{--*/ $sum = $sum+($product->total_price*$product->quantity)  /*--}}
+                                <li class="order-total-descrp"><span class="txt1">{{$product->product_name}}</span> <span class="txt2">{{ $currency[Config::get('params.currency_default')]['symbol']}} {{$product->total_price}}</span></li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        {!! Form::hidden('grandTotal',$sum) !!}
+                        {!! Form::close() !!}  
+
+
+                        @include('front/orders/right')
+
+                    </div>       
+
 
                 </div>
-                @include('front/common/terms')
-                <!--
-                type="button"
-                -->
-                <div class="form-group col-sm-12 p0 mb30">
-                    <button   id="place_order" class="form-control btn-primary w100">PLACE ORDER</button>
-                </div>
+
             </div>
         </div>
 
     </div>
-
-</section>
-{!! Form::hidden('grandTotal',$sum) !!}
-{!! Form::close() !!}  
+</div>
 <script>
-
-    $('#form').submit(function (event) {
-
-        $('.terms-errors').hide();
-        $('.payment-errors').hide();
-
-
-        var term = check_terms_services();
-        if (term === false) {
-            return false;
-        }
-
-        var form = $('#form');
-        form.find('#place_order').prop('disabled', true);
-        Stripe.card.createToken(form, stripeResponseHandler);
-
-        return false;
-    });
-
-
-    function stripeResponseHandler(status, response) {
-        var form = $('#form');
-        // alert(response.error.type);
-        if (response.id) {
-            var token = response.id;
-            form.append($('<input type="hidden" name="stripeToken" />').val(token));
-            form.get(0).submit();
-        } else {
-            $('.payment-errors').show();
-            $('.payment-errors').text(response.error.message);
-            $('.payment-errors').addClass('alert alert-danger');
-
-
-            var scrollPos = $("#form").offset().top;
-            $(window).scrollTop(scrollPos);
-            // $('.payment-errors').focus();
-            form.find('#place_order').prop('disabled', false);
-            return false;
-
-        }
-
-    }
-
-    /*
-     $('#form').on('submitted', function () {
-     // do anything here...
-     });
-     */
-    $("#is_different").on("change", function () {
-        if ($("#is_different").is(':checked')) {
-
-            $("#firstName").val('');
-            $("#lastName").val('');
-            $("#email").val('');
-            $("#address1").val('');
-            $("#address2").val('');
-            $("#state").val('');
-            $("#city").val('');
-            $("#zip").val('');
-            $("#phone").val('');
-        } else
-        {
-            $("#firstName").val('<?php echo $user->firstName; ?>');
-            $("#lastName").val('<?php echo $user->lastName; ?>');
-            $("#email").val('<?php echo $user->email; ?>');
-            $("#address1").val('<?php echo $address->address; ?>');
-            $("#address2").val('<?php echo $address->address2; ?>');
-            $("#state").val('<?php echo $address->state; ?>');
-            $("#city").val('<?php echo $address->city; ?>');
-            $("#zip").val('<?php echo $address->zip; ?>');
-            $("#phone").val('<?php echo $address->phone; ?>');
-        }
-
+    $('form').submit(function () {
+        $(this).find('button[type=submit]').prop('disabled', true);
     });
 </script>
+<script>
+    // A $( document ).ready() block.
+    $(document).ready(function () {
+        var countryId = '<?php echo $address->country; ?>';
+        var stateId = '<?php echo $address->state; ?>';
+        getStates(countryId);
+
+        $("#is_shipping_different").on("change", function () {
+            if ($("#is_shipping_different").is(':checked')) {
+                getStates(countryId);
+                $("#shipping_information").show();
+            } else
+            {
+                $("#shipping_information").hide();
+            }
+
+        });
+        //getCities(stateId);
+    });
+
+    $('#billingCountry, #shippingCountry').on('change', function () {
+        var id = this.value;
+        getStates(id);
+    });
+    $('#billingState, #shippingState').on('change', function () {
+        var id = this.value;
+        getCities(id);
+    });
+    function getStates(countryId) {
+        var stateId = '<?php echo $address->state; ?>';
+        $.ajax({
+            type: "GET",
+            url: "<?php echo url('/state/get/'); ?>/" + countryId,
+            data: "",
+            async: true
+        }).success(function (val) {
+            var response = JSON.parse(val);
+            if (response.length > 0) {
+                var html = "<option value=''>Select your state</option>";
+                for (key in response) {
+                    if (stateId == response[key].id) {
+                        html += "<option value='" + response[key].id + "' selected>" + response[key].name + "</option>";
+                    } else {
+                        html += "<option value='" + response[key].id + "'>" + response[key].name + "</option>";
+                    }
+
+                }
+            } else {
+                html += "<option value=''>Select country first</option> ";
+            }
+            if ($("#is_shipping_different").is(':checked')) {
+                $('#shippingState').html(html);
+            }
+            $('#billingState').html(html);
+        });
+    }
+//    function getCities(stateId) {
+//        var cityId = '<?php echo $address->city; ?>';
+//        $.ajax({
+//            type: "GET",
+//            url: "<?php echo url('/city/get/'); ?>/" + stateId,
+//            data: "",
+//            async: true
+//        }).success(function (val) {
+//            var response = JSON.parse(val);
+//            if (response.length > 0) {
+//                var html1 = "<option value=''>Select your city</option>";
+//                for (key in response) { 
+//                    if (cityId == response[key].id) {
+//                        html1 += "<option value='" + response[key].id + "' selected>" + response[key].name + "</option>";
+//                    } else {
+//                        html1 += "<option value='" + response[key].id + "'>" + response[key].name + "</option>";
+//                    }
+//
+//                }
+//            } else {
+//                html1 += "<option value=''>Select state first</option> ";
+//            }
+//            $('#city').html(html1);
+//        });
+//
+//    }
+
+</script>  
 @endsection

@@ -49,6 +49,12 @@ class HomeController extends Controller {
         $data['model']=$model;
         return view('front.index',$data );
     }
+    
+    
+    
+    
+    
+    
 
     public function howtoorder() {
 

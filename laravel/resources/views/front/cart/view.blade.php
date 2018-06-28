@@ -1,139 +1,110 @@
-@extends('login_signup')
+@extends('front')
 
 @section('content')
-<?php
-//echo $countCart;
-$currency = Config::get('params.currency');
-?>
 
-
-<section class="bnr-area page-bnr-area bg-full bg-cntr valigner" style="background-image:url('{{ asset('front/images/bnr-cart1.jpg') }}');">
+<div id="fh5co-contact" class="__web-inspector-hide-shortcut__">
     <div class="container">
-        <div class="bnr__cont valign white text-center col-sm-12 text-uppercase anime-flipInX">
-            <h2>YOUR CURRENT ORDER</h2>
-            <h4></h4>
+        <?php
+        $currency = Config::get('params.currency');
+        ?>
+        <div class="row">
+            <div class="container-fluid">
+                <div class="checkout-back">
+                    @if (count($cart)==0)
+                    <div class="alert alert-success">
+                        <h4><i class="icon fa fa-check"></i> &nbsp  Your Basket is empty</h4>
+                    </div>
+                    @endif
+                    @if (count($cart)>0)
+                    <div class="cart__main col-sm-8">
+                        <div class="check-left-sect">
+                            <form id="cart_update" name="cart_update"  action="update" >
+                                <table class="table table-fit ">
+                                    <thead>
+                                        <tr>
+                                            <th>Products</th>
+                                            <th>Delete</th>
+                                            <th>Qty</th>
+                                            <th>Single</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $sum = 0;
+                                        ?>
+                                        @foreach ($cart as $product)
+                                        <?php
+                                        $rowTotal = $product->total_price * $product->quantity;
+                                        $sum+=$rowTotal;
+                                        ?>
+                                        <tr>
+                                            <td>
+                                                <udl class="__img">
+                                                    <?php
+                                                    
+                                                        ?>
+                                                        <li class="checkout-img">
+                                                            <img src="{{ asset('uploads/products/thumbnail')}}/<?php echo $product->image ?>" height="100" alt="<?php echo $product->product_name; ?>" />
+                                                        </li>
+                                                        <li><?php echo $product->product_name; ?></li>
+                                                        <?php
+                                                    
+                                                    ?>
+
+                                                </ul>
+                                            </td>
+                                            <td><div class="btn btn-danger white trash-icon"><a href="../cart/delete/<?php echo $product->cart_id ?>"><i class="fa fa-trash"></i></a></div></td>
+                                            <td><input size="1" class="qty-txt" name="qty[<?php echo $product->cart_id ?>]" value="<?php echo $product->quantity ?>" maxlength="2" /></td>
+                                            <td><span class="txt-price">{{ $currency[Config::get('params.currency_default')]['symbol']}} <?php echo $product->total_price ?></span></td>
+                                            <td><span class="txt-price">{{ $currency[Config::get('params.currency_default')]['symbol']}} <?php echo $rowTotal; ?></span></td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+
+                                <ul class="checkout-btm-lnks signalized--hover">
+                                    <li><a href="{!! url('/') !!}"> <i class="fa fa-arrow-circle-right"></i>  Continue Shoping</a></li>
+                                    <li><a href="javascript:void(0);" onclick="submitCart();"> <i class="fa fa-refresh"></i> Update Cart</a></li>
+                                    <li><a href="{!! url('checkout') !!}"> <i class="fa fa-shopping-cart"></i> Proceed to checkout</a></li>
+                                </ul>
+                            </form >
+                        </div>
+
+                        <table width="100%" border="0" id="cart_upselling"><tbody>
+
+                                @foreach ($products as $product)
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <?php echo $product->name ?>
+                                        <form action="../cart/addsimple" method="get">
+                                            <input type="hidden" name="total_price" value="<?php echo $product->price ?>">
+                                            <input type="hidden" name="return" value="cart/view"/>
+                                            <input type="hidden" name="price"  id="price" value="<?php echo $product->price; ?>" />
+                                            <input type="hidden" name="quantity" value="1"/>
+                                            <input type="hidden" name="product_id"  id="product_id" value="<?php echo $product->id; ?>" />							
+                                            <p><strong>{{ $currency[Config::get('params.currency_default')]['symbol']}}<?php echo $product->price ?></strong> &nbsp; 
+                                                <input type="submit" class="button" value="Add to Cart"/></p>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody></table>
+                    </div>
+                    <div class="cart__sidbar col-sm-4">
+                        @include('front/orders/right')
+                    </div>
+                    @endif
+                </div>
+            </div>
         </div>
     </div>
-</section>
-
-
-<section class="table-area cart-table pt30">
-    @if ($countCart > 0)
-    <div class="container">
-
-        @if ($countCart==0)<span>
-            <div class="alert alert-success">
-                <h4><i class="icon fa fa-check"></i> &nbsp  Your Basket is empty</h4>
-            </div></span>
-        @endif
-
-        <div class="table-area  col-sm-12">
-            <form id="cart_update" name="cart_update"  action="update" >
-                <table class="table cart-item-table table-bordered table-topbot table-valign">
-                    <thead>
-                    <th class="col-sm-6">LAB TEST</th>
-                    <th class="col-sm-2">PRICES</th>
-                    <th class="col-sm-2">TOTAL</th>
-                    </thead>
-                    <?php
-                    $sum = 0;
-                    ?>
-                    @foreach ($cart as $product)
-                    <?php
-                    $rowTotal = $product->total_price * $product->quantity;
-                    $sum += $rowTotal;
-                    ?>
-
-
-                    <tr>
-                        <td><!-- <span class="pic"><img src="images/pic.jpg" alt="" /></span> -->
-                            <?php
-                            if ( $product->type == "bundle") {
-                                echo $product->product_name;
-                            } else {
-                                ?>
-                                <a href="<?php echo url('product/' . $product->key); ?>" class="view-cat-link"><?php echo $product->product_name; ?></a>
-
-                                <?php
-                            }
-                            
-                            ?>
-
-                        </td>
-                        <td><span class="txt-price">{{ $currency[Config::get('params.currency_default')]['symbol']}}<?php echo $product->total_price ?></td>
-                        <td>{{ $currency[Config::get('params.currency_default')]['symbol']}}<?php echo $rowTotal; ?></td>
-                    </tr>
-                    @endforeach
-                </table>
-            </form>
-        </div>
-        <div class="table-total-area col-sm-4 col-sm-offset-2 pul-rgt">
-            <table class="table  table-bordered table-topbot">
-                <thead>
-                <th colspan="2">CART TOTALS</th>
-                </thead>
-
-                <tr>
-                    <td>Subtotal</td>
-                    <td>{{ $currency[Config::get('params.currency_default')]['symbol']}}<?php echo $sum; ?></td>
-                </tr>
-                <tr>
-                    <td>Total</td>
-                    <td>{{ $currency[Config::get('params.currency_default')]['symbol']}}<?php echo $sum; ?></td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="clearfix"></div>
-
-        <div class="btn-group pul-rgt pr20">
-            <a href="{!! url('shop') !!}" class="btn  btn-primary" >Continue Shoping <i class="fa fa-arrow-right"></i></a>
-            <a href="{!! url('checkout') !!}" class="btn  btn-success">Proceed to Checkout <i class="fa fa-shopping-cart"></i></a>
-        </div>
-
-    </div>
-
-
-    @endif
-</section>
-
-
-
-
-
-@endsection
-
+</div>
 <script>
 
-
-    function add(product_id, price, quantity) {
-
-        //    return false;
-
-
-        var form = {product_id: product_id, total_price: price, quantity: quantity};
-        var jqxhr = $.get("../cart/add", form, function () {
-            // alert( "Product added to cart." );
-            window.location = "../cart/view";
-
-        })
-                .done(function () {
-                    //alert( "second success" );
-                })
-                .fail(function () {
-                    //alert( "error" );
-                })
-                .always(function () {
-                    //alert( "finished" );
-                });
-    }
-
-    function deleteCart(id) {
-
-        window.top.location = "../cart/delete/" + id;
-    }
     function submitCart() {
         $('#cart_update').submit();
     }
 </script>
-
+@endsection

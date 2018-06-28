@@ -1,38 +1,31 @@
-@extends('front')
+@extends('login_signup')
 
 @section('content')
 
-<section class="bnr-area page-bnr-area bg-full bg-cntr valigner" style="background-image:url('{{ asset('front/images/bnr-thankyou.jpg') }}');">
-    <div class="container">
-        <div class="bnr__cont valign white text-center col-sm-12 text-uppercase anime-flipInX">
-            <h2>Thank you for your Order!</h2>
-            <h4></h4>
-        </div>
-    </div>
-</section>
-
 {!! Form::open(array( 'class' => 'form','url' => 'postOrder', 'name' => 'checkout')) !!}
-<section class="inr-intro-area ">
+<section class="checkout-back-area">
     <div class="container">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="page__title">
-                <h2><p>Your Order number is <strong>"<?php echo Config("params.order_prefix") . $id; ?>"</strong></p></h2>
-            </div>
-			   
-				<p>Your lab order will be emailed to you within a 4 hour window of your order, during our hours of operation 8 AM PST to 10 PM PST. Please note if you have scheduled for a MD consult, your results must be complete before communication. We look forward to serving you!</p>
-			  
-			  <div class="clrlist listview list-icon">
-				<ul>
-					<li><i class="fa fa-phone"></i> Tel.: +1-800-519-2997</li>
-					<li><i class="fa fa-envelope"></i> customerservice@newcenturylabs.com</li>
-				</ul>
-				
-				<h5>Thanks again and have a proactive day.</h5>
-				
-			   </div>
-        </div>
-    </div>
-</section>
-{!! Form::close() !!} 
+   	    <div class="checkout-back col-sm-12">
+                   
+<h3>Your Payment was successful </h3>
+<p class="lead">Thank you for your payment.</p>
+<p>Your transaction has been completed, and a receipt for your purchase has been emailed to you. You will receive your first issue of the Eurofish magazine when the next issue is relased. As a paying subscriber you will also receive access to our online version for FREE. This will be sent to the email address you provided. We will contact you before your subscription expires to ensure that you receive the magazine without interruption.</p>
+
+<p>If you have any comments or questions please do not hesitate to contact us:</p>
+
+<ul>
+	<li>Tel.: +45 333 777 55</li>
+	<li>Fax: +45 333 777 56</li>
+	<li>info@eurofishmagazine.com</li>
+	<li>Thanks again and have a great day.</li>
+</ul>
+            
+            </div>     
+      </div>
+    </section>
+    
+   
+    
+	 {!! Form::close() !!} 
 @endsection
 

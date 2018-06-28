@@ -107,6 +107,8 @@ class ProductsController extends AdminController {
         $model->keywords = $request->keywords;
         $model->image = $fileName;
         $model->sale = $request->sale;
+        $model->featured = $request->featured;
+        $model->popular = $request->popular;
         $model->salePrice = $request->salePrice;
         $model->type = $request->type;
         $model->save();
@@ -188,6 +190,15 @@ class ProductsController extends AdminController {
         if (!isset($input['sale'])) {
             $input['sale'] = 0;
         }
+        
+        if (!isset($input['featured'])) {
+            $input['featured'] = 0;
+        }
+        
+        if (!isset($input['popular'])) {
+            $input['popular'] = 0;
+        }
+        
         unset($input['type_id']);
         unset($input['key']);
         unset($input['_token']);

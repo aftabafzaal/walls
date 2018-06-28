@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en" class="broken-image-checker">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!--iPhone from zooming form issue (maximum-scale=1, user-scalable=0)-->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+        <title>Home</title>
+
+        <link rel="icon" type="image/png" href="images/favicon.png">
+
+        <!-- Bootstrap --><link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <link rel="stylesheet" href="css/stylized.css" data-content="animateCss, fontAwesome, "> 
+        <link rel="stylesheet" href="css/animate.css" data-content="animateCss, fontAwesome, ">
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/swiper.min.css">
+        <!-- jQuery -->
+        <!--[if (!IE)|(gt IE 8)]><!-->
+        <script src="js/jquery-2.2.4.min.js"></script> 
+        <!--<![endif]-->
+
+
+        <!--[if lte IE 8]>
+          <script src="js/jquery1.9.1.min.js"></script>
+        <![endif]-->
+
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="js/html5shiv.min.js"></script>
+          <script src="js/respond.min.js"></script>
+        <![endif]-->
+
+
+    </head>
+    <body class="transition nav-plusminus slide-navbar slide-navbar--right">
+
+        <div class="wrapper">
+            <header>
+                <section class="hdr-area  hdr-nav  bg-cvr" style="background-image:url('images/header.png')">
+                    <div class="container">
+                        <nav class="navbar navbar-default" role="navigation" id="slide-nav">
+                            <div class="container-fluid">
+                                <!-- Brand and toggle get grouped for better mobile display -->
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                    <a class="navbar-brand animated rubberBand delay2s" href="./"><img src="images/logo.png" alt="logo" class="broken-image"/></a>
+                                </div>
+
+                                <!-- Collect the nav links, forms, and other content for toggling -->
+                                <div id="slidemenu">
+                                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                        <ul class="nav navbar-nav navbar-main fl">
+
+                                            <li><a href="#!3">Home</a></li>
+                                            <li><a href="#!6">About</a></li>
+                                            <li><a href="#!5">Build your own Basket</a></li>
+                                            <li><a href="#!6">Bundles</a></li>
+                                        </ul>
+
+                                        <ul class="nav navbar-nav fr ml50">
+                                            <li><a href="#!6"><i class="icon"><img src="images/icon-user.png" alt="" /></i></a></li>
+                                            <li><a href="#!6"><i class="icon"><img src="images/icon-cart.png" alt="" /></i></a></li>
+                                        </ul>
+
+                                    </div> 
+                                </div>
+                            </div> 
+                        </nav>
+                    </div>
+                </section>
+            </header>
+
+            <main id="page-content" class="container">
+
+                <section class="slider-area no-ctrl " >
+                    <div id="carousel-example-generic" class="carousel slide slider--pauseplay">
+
+                        <ol class="carousel-indicators thumbs">
+                            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                        </ol>
+
+                        <span class="pins">
+                            <span class="pin pin1"><img src="images/pin2.png" alt="" /></span>
+                            <span class="pin pin2"><img src="images/pin1.png" alt="" /></span>
+
+                        </span>
+
+                        <div class="carousel-inner  bg-cvr" style='background-image:url("images/slider-bg.png")'>
+
+
+                            <div class="item active bg-cntr" style="background-image:url('images/slide1.jpg');">
+
+                                <div class="container">
+                                    <div class="caro-cap">
+
+                                        <h2>Eid ki khushiyan</h2>
+                                        <h2>Karain double</h2>
+                                        <img src="images/slide-caption.png" />
+                                        <h2>Kay sath!</h2>
+                                    </div>
+
+
+                                    <div class="slide_bottom bg-cvr anime-up" style="background-image:url('images/slide-wood.png')">
+                                        <img class="anime-right delay1s" src="images/slide-icecream.png" alt="" />
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        </a>
+
+                    </div>
+
+                </section>
+
+
+                <section class="banner-area bg-cvr" style="background-image:url('images/banner-bg.png')">
+                    <div class="container">
+                        <span class="pin"><img src="images/pin3.png" /></span>
+                        <img src="images/banner.png" alt="" />
+
+                    </div>
+                </section>
+
+
+
+
+
+
+                <section class="feat-area">
+                    <div class="container">
+
+                        <div class="hed">
+                            <h2>FEATURED PRODUCTS</h2>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="prod col-sm-3">
+                            <div class="prod__inr">
+                                <div class="prod__img">
+                                    <img src="images/prod1.jpg" alt="" />
+                                </div>
+                                <div class="prod__cont">
+                                    <a class="btn btn-primary" href="#">BUY</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="prod col-sm-3">
+                            <div class="prod__inr">
+                                <div class="prod__img">
+                                    <img src="images/prod2.jpg" alt="" />
+                                </div>
+                                <div class="prod__cont">
+                                    <a class="btn btn-primary" href="#">BUY</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="prod col-sm-3">
+                            <div class="prod__inr">
+                                <div class="prod__img">
+                                    <img src="images/prod3.jpg" alt="" />
+                                </div>
+                                <div class="prod__cont">
+                                    <a class="btn btn-primary" href="#">BUY</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="prod col-sm-3">
+                            <div class="prod__inr">
+                                <div class="prod__img">
+                                    <img src="images/prod4.jpg" alt="" />
+                                </div>
+                                <div class="prod__cont">
+                                    <a class="btn btn-primary" href="#">BUY</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="prod col-sm-3">
+                            <div class="prod__inr">
+                                <div class="prod__img">
+                                    <img src="images/prod5.jpg" alt="" />
+                                </div>
+                                <div class="prod__cont">
+                                    <a class="btn btn-primary" href="#">BUY</a>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="prod col-sm-3">
+                            <div class="prod__inr">
+                                <div class="prod__img">
+                                    <img src="images/prod6.jpg" alt="" />
+                                </div>
+                                <div class="prod__cont">
+                                    <a class="btn btn-primary" href="#">BUY</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="prod col-sm-3">
+                            <div class="prod__inr">
+                                <div class="prod__img">
+                                    <img src="images/prod7.jpg" alt="" />
+                                </div>
+                                <div class="prod__cont">
+                                    <a class="btn btn-primary" href="#">BUY</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="prod col-sm-3">
+                            <div class="prod__inr">
+                                <div class="prod__img">
+                                    <img src="images/prod8.jpg" alt="" />
+                                </div>
+                                <div class="prod__cont">
+                                    <a class="btn btn-primary" href="#">BUY</a>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </section>
+
+
+
+
+
+
+
+
+
+                <section class="popular-area">
+                    <div class="container">
+
+
+                        <div class="hed">
+                            <h2>POPULAR PRODUCTS</h2>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+
+                        <div class="swiper-container dontfly s1">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="prod">
+                                        <div class="prod__inr">
+                                            <div class="prod__img">
+                                                <img src="images/pop1.jpg" alt="" />
+                                            </div>
+                                            <div class="prod__cont">
+                                                <a class="btn btn-primary" href="#">BUY</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="prod">
+                                        <div class="prod__inr">
+                                            <div class="prod__img">
+                                                <img src="images/pop2.jpg" alt="" />
+                                            </div>
+                                            <div class="prod__cont">
+                                                <a class="btn btn-primary" href="#">BUY</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="swiper-slide">
+                                    <div class="prod">
+                                        <div class="prod__inr">
+                                            <div class="prod__img">
+                                                <img src="images/pop3.jpg" alt="" />
+                                            </div>
+                                            <div class="prod__cont">
+                                                <a class="btn btn-primary" href="#">BUY</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>	 <div class="swiper-slide">
+                                    <div class="prod">
+                                        <div class="prod__inr">
+                                            <div class="prod__img">
+                                                <img src="images/pop2.jpg" alt="" />
+                                            </div>
+                                            <div class="prod__cont">
+                                                <a class="btn btn-primary" href="#">BUY</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="swiper-slide">
+                                    <div class="prod">
+                                        <div class="prod__inr">
+                                            <div class="prod__img">
+                                                <img src="images/pop3.jpg" alt="" />
+                                            </div>
+                                            <div class="prod__cont">
+                                                <a class="btn btn-primary" href="#">BUY</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div> 
+
+
+                        </div>
+
+                        <div class="swiper-button-next swiper-button-next1"><i class="fa fa-angle-right"></i></div>
+                        <div class="swiper-button-prev swiper-button-prev1"><i class="fa fa-angle-left"></i></div>
+
+
+                        <!--div class="prod col-sm-4">
+                                <div class="prod__inr">
+                                        <div class="prod__img">
+                                                <img src="images/pop1.jpg" alt="" />
+                                        </div>
+                                        <div class="prod__cont">
+                                                <a class="btn btn-primary" href="#">BUY</a>
+                                        </div>
+                                </div>
+                        </div>
+                        
+                        
+                        <div class="prod col-sm-4">
+                                <div class="prod__inr">
+                                        <div class="prod__img">
+                                                <img src="images/pop2.jpg" alt="" />
+                                        </div>
+                                        <div class="prod__cont">
+                                                <a class="btn btn-primary" href="#">BUY</a>
+                                        </div>
+                                </div>
+                        </div>
+                        
+                        
+                        
+                        <div class="prod col-sm-4">
+                                <div class="prod__inr">
+                                        <div class="prod__img">
+                                                <img src="images/pop3.jpg" alt="" />
+                                        </div>
+                                        <div class="prod__cont">
+                                                <a class="btn btn-primary" href="#">BUY</a>
+                                        </div>
+                                </div>
+                        </div-->
+
+                    </div>
+                </section> 
+
+
+
+
+                <section class="bundles-area   ">
+                    <div class="container">
+
+
+                        <div class="hed lg bg-cvr" style="background-image:url('images/bundle-bg.png')">
+                            <h2>
+
+                                <span class="fl pin"><img src="images/pin2.png" /></span>
+                                Bundles 
+                                <span class="fr pin"><img src="images/pin1.png" /></span>
+
+                            </h2>
+                        </div>
+
+
+                        <div class="clearfix"></div>
+
+
+
+                        <div class="prod col-sm-6">
+                            <div class="prod__inr">
+                                <div class="prod__img">
+                                    <img src="images/pp1.jpg" alt="" />
+                                </div>
+                                <div class="prod__cont">
+                                    <a class="btn btn-primary" href="#">BUY</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="prod col-sm-6">
+                            <div class="prod__inr">
+                                <div class="prod__img">
+                                    <img src="images/pp2.jpg" alt="" />
+                                </div>
+                                <div class="prod__cont">
+                                    <a class="btn btn-primary" href="#">BUY</a>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="prod col-sm-6">
+                            <div class="prod__inr">
+                                <div class="prod__img">
+                                    <img src="images/pp3.jpg" alt="" />
+                                </div>
+                                <div class="prod__cont">
+                                    <a class="btn btn-primary" href="#">BUY</a>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="prod col-sm-6">
+                            <div class="prod__inr">
+                                <div class="prod__img">
+                                    <img src="images/pp4.jpg" alt="" />
+                                </div>
+                                <div class="prod__cont">
+                                    <a class="btn btn-primary" href="#">BUY</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+            </main>
+
+
+            <footer> 
+
+                <section class="bottom-area text-right bg-cvr " style="background-image:url('images/footer-bg.png');">
+                    <div class="container">
+
+                        2018 WALL’S ALL RIGHTS RESERVED
+
+                    </div>
+                </section>
+
+            </footer>
+
+            <a href="" class="scrollToTop"><i class="fa fa-arrow-up"></i></a>
+
+        </div>
+
+        <!--Bootstrap-->
+        <script src="js/bootstrap.min.js"></script>
+        <!--./Bootstrap-->
+
+        <!--Major Scripts-->
+
+        <script src="js/kodeized.js"></script>
+        <script src="js/viewportchecker.js"></script>
+        <script src="js/customized.js"></script>
+        <!--./Major Scripts-->
+
+
+        <!--Swiper Slider-->
+        <script src="js/swiper.jquery.min.js"></script>
+        <script>
+            var swiper1 = new Swiper('.s1', {
+                pagination: '.swiper-pagination',
+                slidesPerView: '3',
+                centeredSlides: false,
+                paginationClickable: true,
+                nextButton: '.swiper-button-next1',
+                prevButton: '.swiper-button-prev1',
+                spaceBetween: 15,
+                autoplay: 2500,
+                autoplayDisableOnInteraction: false,
+                breakpoints: {
+                    1024: {slidesPerView: 3, spaceBetween: 40},
+                    768: {slidesPerView: 3, spaceBetween: 30},
+                    640: {slidesPerView: 1, spaceBetween: 20},
+                    320: {slidesPerView: 1, spaceBetween: 10}
+                }
+            });
+
+
+        </script>
+        <!--./Swiper Slider -->
+
+
+
+    </body>
+</html>

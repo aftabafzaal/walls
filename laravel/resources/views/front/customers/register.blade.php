@@ -136,16 +136,13 @@ $required = 'required';
             </div>
             <div class="form-group col-sm-6">  
                 <?php
-                echo Recaptcha::render(['lang' => 'en']);
+                ///echo Recaptcha::render(['lang' => 'en']);
                 ?>
             </div>
             <div class="form-group col-sm-6 text-right">
                 <button type="submit" class="btn btn-flat btn-primary " >SIGNUP</button>
             </div>
-            <div class="form-group col-sm-12">
-                <small>We do not support orders from the following states:
-                    <strong>NY, NJ RI, MD, HI</strong></small>
-            </div>	
+            	
             {!! Form::hidden('role_id',2) !!}
         </div>
     </div>

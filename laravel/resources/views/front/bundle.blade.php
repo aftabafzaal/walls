@@ -2,37 +2,34 @@
 $currency = Config::get('params.currency');
 $symbol = $currency[Config::get('params.currency_default')]['symbol'];
 ?>
-<div class="test-menu-area table-responsive0">
-    <div class="heading">
-        <h1>Select Your Desire Bundle</h1>
-    </div>
+@if(count($products)>0)
+<div class="hed lg bg-cvr" style="background-image:url('{{ asset('front/images/bundle-bg.png')}}')">
+    <h2><span class="fl pin"><img src="{{ asset('front/images/pin2.png')}}" /></span>
+        Bundles 
+        <span class="fr pin"><img src="{{ asset('front/images/pin1.png')}}" /></span>
+    </h2>
+</div>
+<div class="clearfix"></div>
+@foreach ($products as $product)
 
-    
-    <div class="container">
-
-        @if(count($products)>0)
-        @foreach ($products as $product)
-
-        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-            <div class="box-customn">
-                <div class="img-wrap-tailor">
-                    <a href="<?php echo url('product/' . $product->id); ?>"><img src="{{ asset('uploads/products/thumbnail')}}/<?php echo $product->image; ?>" alt="<?php echo $product->name; ?>" /></a>
-                    View</span>
-                    <a onclick="AddToCart(<?php echo $product->id ?>, 1)"><span>Add To Cart</span></a>
-                </div>
-                <div class="imfo-area">
-                    <h3><?php echo $product->name; ?></h3>
-                    <h4> @include('front/products/price')</h4>
-                </div>
+<div class="prod col-sm-6">
+    <div class="prod__inr">
+        <div class="prod__img">
+            <a href="<?php echo url('product/' . $product->id); ?>"><img src="{{ asset('uploads/products/thumbnail')}}/<?php echo $product->image; ?>" alt="<?php echo $product->name; ?>" /></a>
+            <div class="imfo-area">
+                <h3><?php echo $product->name; ?></h3>
+                <h4> @include('front/products/price')</h4>
             </div>
         </div>
-        @endforeach
-        @else
-        <div class="warning">Sorry, there is no results for your search</div>
-        @endif
-
+        <div class="prod__cont">
+            <a class="btn btn-primary" onclick="AddToCart(<?php echo $product->id ?>, 1)"><span>BUY</span></a>
+        </div>
     </div>
 </div>
+@endforeach
+@else
+<div class="warning">Sorry, there is no results for your search</div>
+@endif
 <script>
     function AddToCart(product_id) {
 

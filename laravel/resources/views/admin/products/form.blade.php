@@ -45,6 +45,15 @@ $required = "required";
 </div>
 
 <div class="form-group">
+    {!! Form::checkbox('featured',1,false,['id'=>'sale']); !!}
+    Make This Featured. 
+</div>
+<div class="form-group">
+    {!! Form::checkbox('popular',1,false,['id'=>'popular']); !!}
+    Make This Popular. 
+</div>
+
+<div class="form-group">
     {!! Form::label('keywords') !!}
     {!! Form::text('keywords', null , array('class' => 'form-control',$required) ) !!}
 </div>

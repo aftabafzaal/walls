@@ -141,12 +141,13 @@ class SignupController extends Controller {
             'zip' => 'required|max:15',
             'address' => 'required|max:200',
             'phone' => 'required|max:16',
-            'g-recaptcha-response' => 'required|recaptcha',
+            ///'g-recaptcha-response' => 'required|recaptcha',
         );
 
         $messages = [
             "recaptcha" => 'The :attribute field is not correct.',
         ];
+        
         $validator = Validator::make($request->all(), $validation);
 
         if ($validator->fails()) {

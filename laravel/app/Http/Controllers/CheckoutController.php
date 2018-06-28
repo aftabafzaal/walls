@@ -2,207 +2,184 @@
 
 namespace App\Http\Controllers;
 
-use DB;
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Validator,
-    Input,
-    Redirect;
+use Validator;
 use Auth;
-use App\Products;
 use App\User;
 use App\Orders;
 use App\Address;
-use Config;
-use App\States;
+use App\Countries;
+use App\Shipping;
 use App\OrdersProducts;
-use App\ProductsCategories;
-use App\OrdersBundles;
+use App\OrderProductAttributes;
+use App\OrdersDiscounts;
+use App\PaymentPayflow;
+use App\Transactions;
 use Session;
 use Illuminate\Http\Request;
-use Stripe;
-use App\StripeCustomers;
-use App\QuestOrders;
-use App\Quest\Api;
-use App\Content;
-use App\Cart;
+use App\Functions\Payflow;
 use App\Functions\Functions;
-
-//use Cartalyst\Stripe\Laravel\Facades\Stripe;
+use Config;
+use DB;
 
 class CheckoutController extends Controller {
 
     public $auth;
-    private $sessionId;
 
     public function __construct() {
-
         $this->middleware('auth');
-        session_start();
-        $this->sessionId = session_id();
-        //$this->paypal = new PayPal();
-        // $this->_apiContext = $this->paypal->ApiContext(
-        //        config('paypal.express.client_id'), config('paypal.express.secret'));
-        // $this->_apiContext->setConfig(config('paypal.express.config'));
     }
 
     public function index() {
-        //$shippings = Shipping::all();
+        $shippings = Shipping::all();
 
         $coupon = array();
+        $validDiscount = Session::get('validDiscount');
+
         $userId = Auth::user()->id;
         $user = User::findOrFail($userId);
         $address = Address::where('user_id', '=', $userId)->first();
-        $states = States::lists('title', 'code');
-
-        if (empty($address)) {
-            $address = new Address();
-            $address->address = null;
-            $address->address2 = null;
-            $address->state = null;
-            $address->city = null;
-            $address->zip = null;
-            $address->phone = null;
-        }
-
+        $countries = Countries::get();
+        $states = \App\States::get();
         $cart = Session::get('cart');
-        $countCart = Cart::countCart($this->sessionId);
-        if ($countCart == 0) {
-            return redirect("/");
+        if ($validDiscount == 1) {
+            $coupon = Session::get('coupon');
         }
-
-        return view('front.checkout.index', compact('states', 'user', 'cart', 'address'));
+        return view('front.checkout.index', compact('countries', 'user', 'cart', 'address', 'coupon', 'shippings', 'states'));
     }
 
     public function order(Request $request) {
-        //error_reporting(1);
-        $userId = Auth::user()->id;
+
+        $currency = Config('params.currency_default');
         $validationArray = array(
-            'firstName' => 'required|max:30',
-            'lastName' => 'required|max:30',
-            'email' => 'email|required|max:100',
-            'country_id' => 'required',
-            'state' => 'required',
-            'city' => 'required',
-            'address1' => 'required',
-            'zip' => 'required',
-            'phone' => 'required',
-            'gender' => 'required',
-            'terms' => 'required',
-            'ssn' => 'max:15',
-            'cc' => 'required|max:16',
-            'cvc' => 'required|max:4',
-            'message' => 'min:10|max:300',
+            'billingFirstName' => 'required|max:255',
+            'billingLastName' => 'required|max:255',
+            'billingEmail' => 'required|email',
+            'billingState' => 'required',
+            'billingCity' => 'required',
+            'billingAddress1' => 'required',
+            'billingZip' => 'required',
+            'billingPhone' => 'required',
+          //  'shipping_id' => 'required',
+            'message' => 'max:200',
         );
 
-        // d($request->all(),1);
-        //$token = $request->stripeToken;
 
-        $user = User::findOrFail($userId);
-        $email = $user->email;
+
+        if ($request->isShippingDifferent == 1) {
+            $validationShippingArray = array(
+                'shippingFirstName' => 'required|max:255',
+                'shippingLastName' => 'required|max:255',
+                
+                'shippingState' => 'required',
+                'shippingCity' => 'required',
+                'shippingAddress1' => 'required',
+                'shippingPhone' => 'required',
+                'shippingZip' => 'required',
+            );
+            $validationArray = array_merge($validationArray, $validationShippingArray);
+        }
+
         $validator = Validator::make($request->all(), $validationArray);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors(), 'checkout');
         }
-        $orderPrefix = Config::get('params.order_prefix');
-        $stripe = Stripe::setApiKey(env('STRIPE_SECRET_SK'));
 
-        try {
-
-            $token = $stripe->tokens()->create([
-                'card' => [
-                    'number' => $request->cc,
-                    'exp_month' => $request->expMonth,
-                    'exp_year' => $request->expYear,
-                    'cvc' => $request->cvc,
-                ],
-            ]);
-
-            $stripeCustomerModel = StripeCustomers::where('user_id', $userId)->orderBy('id', 'desc')->first();
-            if (isset($stripeCustomerModel->stripeCustomerId)) {
-                $stripeCustomerId = $stripeCustomerModel->stripeCustomerId;
-                $customer = Stripe::customers()->update($stripeCustomerId, array('source' => $token['id']));
-            } else {
-                $customer = Stripe::customers()->create([
-                    'source' => $token['id'],
-                    'email' => $email,
-                    'metadata' => [
-                        "First Name" => $user->firstName,
-                        "Last Name" => $user->lastName
-                ]]);
-
-                $stripeCustomerId = $customer['id'];
-                $insert_id = StripeCustomers::insertGetId(array('user_id' => $userId, 'stripeCustomerId' => $stripeCustomerId));
-
-                $defaultSource = $customer['default_source'];
-            }
-
-            $defaultSource = $customer['default_source'];
-        } catch (\Stripe\Error\Card $e) {
-            return redirect()->back()->withErrors($e->getMessage(), 'checkout')->withInput();
-        }
+        $coupon = array();
+        $validDiscount = Session::get('validDiscount');
 
         DB::beginTransaction();
-
         try {
 
             $orderModel = new Orders();
-            $orderModel->firstName = $request->firstName;
-            $orderModel->lastName = $request->lastName;
-            $orderModel->dob = $request->year . "-" . $request->month . "-" . $request->date;
-            $orderModel->gender = $request->gender;
-            $orderModel->email = $request->email;
+            $orderModel->billingFirstName = $request->billingFirstName;
+            $orderModel->billingLastName = $request->billingLastName;
+            $orderModel->email = $request->billingEmail;
+
+            $orderModel->shippingFirstName = $request->billingFirstName;
+            $orderModel->shippingLastName = $request->billingLastName;
             $orderModel->message = $request->message;
+            $orderModel->shipping_id = 1;
+
+            if ($request->isShippingDifferent == 1) {
+                $orderModel->shippingFirstName = $request->shippingFirstName;
+                $orderModel->shippingLastName = $request->shippingLastName;
+            }
+            $country_id=167;
             $orderModel->user_id = Auth::user()->id;
-            $orderModel->grandTotal = $request->grandTotal;
-            $orderModel->paymentType = 'stripe';
+            $shipping=array();
+            //$shipping = Shipping::where('id', $request->shipping_id)->first();
+            $shippingPrice=0;
+            $discount = 0;
+            if ($validDiscount == 1) {
+                $coupon = Session::get('coupon');
+                $orderModel->grandTotal = $request->grandTotal + $shippingPrice - $coupon['discount'];
+                $discount = $coupon['discount'];
+            } else {
+               $orderModel->grandTotal = $request->grandTotal + $shippingPrice;
+            }
+
+            $orderModel->paymentType = 'cashondelivery';
             $orderModel->save();
+
             $order_id = $orderModel->id;
+            $data['orderModel'] = $orderModel;
+
+            if ($validDiscount == 1) {
+                $discountModel = new OrdersDiscounts();
+                $discountModel->order_id = $orderModel->id;
+                $discountModel->customer_id = Auth::user()->id;
+                $discountModel->coupon_id = $coupon['coupons']->id;
+                $discountModel->discount = $coupon['discount'];
+                $discountModel->save();
+            }
+            
+            // $request->billing_country_id = 230;
+
             $address1 = new Address();
-            $address1->country = $request->country_id;
-            $address1->city = $request->city;
-            $address1->state = $request->state;
-            $address1->address = $request->address1;
-            $address1->address2 = $request->address2;
+            $address1->country = $country_id;
+            $address1->city = $request->billingCity;
+            $address1->state = $request->billingState;
+            $address1->address = $request->billingAddress1;
+            $address1->address2 = $request->billingAddress2;
             $address1->order_id = $order_id;
             $address1->user_id = Auth::user()->id;
-            $address1->zip = $request->zip;
-            $address1->phone = $request->phone;
-            $address1->addressType = 'patient';
+            $address1->zip = $request->billingZip;
+            $address1->phone = $request->billingPhone;
+            $address1->addressType = 'billing';
             $address1->save();
 
-            $quest['PATIENT_LASTNAME'] = $request->lastName;
-            $quest['PATIENT_FIRSTNAME'] = $request->firstName;
-            $quest['PID'] = 'P' . $order_id;
-            $quest['DOB'] = $request->year . sprintf("%02d", $request->month) . sprintf("%02d", $request->date);
-            $quest['GENDER'] = strtoupper($request->gender);
-            $quest['PHONE'] = strtoupper($request->phone);
-            $quest['SSN'] = $request->ssn;
-            $quest['MESSAGE_CODE'] = 'ORM^O01';
-            $quest['MESSAGE_CONTROL_ID'] = $orderPrefix . $order_id;
 
-            $quest['ORDER_CONTROL'] = 'NW';
-            $quest['ORDER_NUMBER'] = $order_id;
+            $addressShiiping = new Address();
+            $addressShiiping->addressType = 'shipping';
+            if ($request->isShippingDifferent != 1) {
+                $addressShiiping->country = $country_id;
+                $addressShiiping->city = $request->billingCity;
+                $addressShiiping->state = $request->billingState;
+                $addressShiiping->address = $request->billingAddress1;
+                $addressShiiping->address2 = $request->billingAddress2;
+                $addressShiiping->order_id = $order_id;
+                $addressShiiping->user_id = Auth::user()->id;
+                $addressShiiping->zip = $request->billingZip;
+                $addressShiiping->phone = $request->billingPhone;
+            } else {
+                $addressShiiping->country = $country_id;
+                $addressShiiping->city = $request->shippingCity;
+                $addressShiiping->state = $request->shippingState;
+                $addressShiiping->address = $request->shippingAddress1;
+                $addressShiiping->address2 = $request->shippingAddress2;
+                $addressShiiping->order_id = $order_id;
+                $addressShiiping->user_id = Auth::user()->id;
+                $addressShiiping->zip = $request->shippingZip;
+                $addressShiiping->phone = $request->shippingPhone;
+            }
+            $addressShiiping->save();
             $cart = Session::get('cart');
 
-            $charge = Stripe::charges()->create([
-                'amount' => $request->grandTotal,
-                'currency' => 'usd',
-                'customer' => $stripeCustomerId,
-                'source' => $defaultSource,
-                'metadata' => [
-                    "Order ID" => $orderPrefix . $order_id,
-                    "Link" => url('admin/order/' . $order_id)
-                ],
-                'capture' => true]);
-
-
+            $i = 1;
             $sum = 0;
             $quantity = 0;
-            $tests = array();
-            $testCount = 1;
-            $i = 1;
             foreach ($cart as $product) {
 
                 $opModel = new OrdersProducts();
@@ -212,70 +189,70 @@ class CheckoutController extends Controller {
                 $opModel->quantity = $product->quantity;
                 $opModel->save();
 
-                $productModel = Products::find($product->product_id);
+                $description = "";
+                $sum += $product->total_price * $product->quantity;
+                $quantity += $product->quantity;
 
-                if ($productModel->type == 'bundle') {
-
-                    $productCategories = ProductsCategories::getBundleCategories($productModel->id);
-                    // d($productCategories,1);
-                    foreach ($productCategories as $pc) {
-                        $input['name'] = $productModel->name . '-' . $pc->category . '-' . $pc->name;
-                        $input['product_id'] = $productModel->id;
-                        $input['order_id'] = $order_id;
-                        $input['created_at'] = date('Y-m-d H:i:s');
-                        $id = OrdersBundles::insertGetId($input);
-                        $tests[$testCount++] = 'ORC|NW|' . $order_id . '|||||||||||';
-                        $tests[$testCount++] = 'OBR|' . $i . '|' . $order_id . '||^^^B' . $productModel->id . '^' . $input['name'] . '|||{{TIME}}|||||||||||||||||||||';
-                    }
-                } elseif ($productModel->type == 'simple') {
-
-                    $tests[$testCount++] = 'ORC|NW|' . $order_id . '|||||||||||';
-                    $tests[$testCount++] = 'OBR|' . $i . '|' . $order_id . '||^^^' . $productModel->sku . '^' . $productModel->name . '|||{{TIME}}|||||||||||||||||||||';
-
-                    $testCount++;
-                    $i++;
+                $attribute_ids = explode(',', $product->attribute_id);
+                $attributes = explode(',', $product->attribute);
+                $values = explode(',', $product->value);
+                while (list($key, $attribute) = each($attributes) and list($vkey, $value) = each($values) and list($akey, $attribute_id) = each($attribute_ids)) {
+                    $opaModel = new OrderProductAttributes();
+                    $opaModel->attribute_id = $attribute_id;
+                    $opaModel->attribute = $attribute;
+                    $opaModel->value = $value;
+                    $opaModel->orders_prodrocts_id = $opModel->id;
+                    $opaModel->save();
+                    $description .= $opaModel->attribute . ": " . $opaModel->value . "\n";
                 }
+                $i++;
             }
-            $quest['TESTS'] = implode("\r", $tests);
 
-            //if ($order_id > 350) {
-            //    return redirect('checkout/fail');
-            //}
+            if ($validDiscount == 1) {
+                $d = $coupon['discount'] * -1;
+            }
+            self::sendOrderMail($order_id);
 
-            $questOrder = Api::submitOrder($quest, $order_id);
-            $questOrder = base64_decode($questOrder);
-            QuestOrders::insertGetId(array('order_id' => $order_id, 'response' => $questOrder));
-            Session::put('order_id', $order_id);
             DB::commit();
             return redirect('checkout/success/' . $order_id);
         } catch (Exception $e) {
-            DB::rollBack();
-            return redirect('checkout/fail');
+            return redirect()->back()->withErrors($validator->errors(), 'checkout');
+            //return redirect('checkout/fail');
         }
     }
 
     public function success($id) {
-
-        $order = Orders::getOrderDetailByPk($id);
-        $orderPrefix = Config::get('params.order_prefix');
-        //d($order,1);
-        $content = Content::where('code', '=', 'order_confirmation')->get();
-        $replaces = array();
-        $template = Functions::setEmailTemplate($content, $replaces);
-        $message = 'You have received an order from ' . $order->patientName . '. Their order is as follows:';
-        $link = url('') . '/admin/order/' . $id;
-        $body = view('front.orders.email', compact('order', 'message', 'link'))->with('id', $id);
-        $mail = Functions::sendEmail(Config::get('params.from_email'), $template['subject'], $body);
-        $message = '';
-        $link = url('') . '/order/' . $id;
-        $body = view('front.orders.email', compact('order', 'message', 'link'))->with('id', $id);
-        // $mail = Functions::sendEmail($order->email, $template['subject'], $body);
-        Cart::where('session_id', '=', $this->sessionId)->delete();
         return view('front.checkout.success')->with('id', $id);
     }
 
-    public function fail() {
-        return view('front.checkout.fail');
+    public function sendOrderMail($order_id) {
+        $id = $order_id;
+
+        $order_email = Config('params.order_email');
+
+        try {
+            $orders = Orders::getOrderDetailByPk($id);
+
+            $addresses = Address::where('order_id', $id)->orderBy('addressType', 'shipping')
+                    ->leftJoin('countries as c', 'c.id', '=', 'address.country')
+                    ->leftJoin('states as s', 's.code', '=', 'address.state')
+                    ->select('address.*', 'c.name as country', 's.title as state')
+                    ->first();
+            $data['orders'] = $orders;
+            $data['addresses'] = $addresses;
+
+            $subjectUser = view('emails.order_user.order_subject');
+            $bodyUser = view('emails.order_user.order_body', $data);
+            Functions::sendEmail(Auth::user()->email, $subjectUser, $bodyUser);
+
+            $subject = view('emails.order_system.order_subject');
+            $body = view('emails.order_system.order_body', $data);
+          Functions::sendEmail($order_email, $subject, $body);
+            return TRUE;
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+            return FALSE;
+        }
     }
 
 }

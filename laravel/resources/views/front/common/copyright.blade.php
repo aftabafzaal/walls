@@ -1,1 +1,1 @@
-<p class="copyright-text">Copyright &copy; <a href="http://www.walls.com">Walls</a>| All right reserved.</p>
+2018 WALL’S ALL RIGHTS RESERVED
