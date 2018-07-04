@@ -1,6 +1,14 @@
+@font-face {
+    font-family: 'happiness';
+    src: url('fonts/happiness-webfont.woff2') format('woff2'),
+         url('fonts/happiness-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 
-body{font-family: "Open Sans", "Helvetica", "Helvetica Neue",Arial,sans-serif;}
-h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{font-family: "Open Sans", "Helvetica", "Helvetica Neue", Arial,sans-serif;}
+}
+
+body{font-family: "happiness", "Helvetica", "Helvetica Neue",Arial,sans-serif;}
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{font-family: "happiness", "Helvetica", "Helvetica Neue", Arial,sans-serif;}
 
 
 body{
@@ -20,7 +28,7 @@ body{
 
 
 .hdr-nav {
-    min-height: 160px;
+    min-height: 105px;
     margin-bottom: 50px;
 }
 
@@ -95,7 +103,7 @@ section.banner-area .pin {
 
 .hed h2 {
     text-align: center;
-    color: #d00;
+    color: #f0382a;
     font-size: 40px;
     margin: 40px;
 }
@@ -103,13 +111,13 @@ section.banner-area .pin {
 
 .hed h2 {
     text-align: center;
-    color: #d00;
+    color: #f0382a;
     font-size: 40px;
     margin: 40px;
 }
 
 .prod__img {
-    border: 2px solid #d00;
+    border: 2px solid #f0382a;
     border-radius: 6px;
     overflow: hidden;
     height: 200px;
@@ -123,8 +131,8 @@ section.banner-area .pin {
 }
 
 .btn-primary {
-    background-color: #d00;
-    border-color: #d00;
+    background-color: #f0382a;
+    border-color: #f0382a;
     font-size: 20px;
     padding-top: 2px;
     line-height: normal;
@@ -141,7 +149,7 @@ section.banner-area .pin {
 
 .hed.lg .pin.fl { left:20px; }
 
-.hed.lg .pin { top: 44px; }
+.hed.lg .pin { top: 64px; }
 
 section.bottom-area {
     padding: 50px;
@@ -191,16 +199,16 @@ body .swiper-button-next {
 
 
 body 
-.swiper-button-next{margin-right:-114px; 
+.swiper-button-next{margin-right:-80px; 
     background-image: url("images/arrow2.png");}
 
 body 
-.swiper-button-prev{margin-left:-114px; 
+.swiper-button-prev{margin-left:-80px; 
     background-image: url("images/arrow.png");}
 
 body .swiper-button-prev i,
 body .swiper-button-next i {
-    background-color: #d00;
+    background-color: #f0382a;
     display: inline-block;
     color: #fff;
     padding: 10px;
@@ -211,7 +219,38 @@ body .swiper-button-next i {
     margin-top: 8px;
 }
 
+.mini-cart ul.dropdown-menu {
+  
+    right: 0;
+    left: auto;
+    min-width: 330px;
+}
 
+.bundles-area .prod__img {
+    background-color: #f0382a;
+    color: #fff;
+    padding: 20px;
+}
+
+.bundles-area .prod_tag {
+    position: absolute;
+    top: 10px;
+    display: block;
+    left:25px; background-color:#fff;
+    color:#f0382a; padding:4px 10px; border-radius:50px;
+}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 /*==============Media Queries==============*/
 /* 24" large Screens */
 @media only screen and (max-width : 1920px) {	}
@@ -234,7 +273,13 @@ body .swiper-button-next i {
 
 
 /* 12" Notebook & iPad landscape  · width: 1024px */
-@media only screen and (max-width : 1024px) {	}
+@media only screen and (max-width : 1024px) {
+
+.navbar-default .navbar-nav>li>a {
+    font-size: 20px;
+}
+
+	}
 
 
 /* Medium Devices, Desktops */
@@ -246,7 +291,90 @@ body .swiper-button-next i {
 
 
 /* Kindel Fire HD 8.9in (800x1280) Tablets */
-@media only screen and (max-width : 800px) {	}
+@media only screen and (max-width : 812px) {
+	
+
+	.navbar-cart {
+    width: 100%;
+    float: left;
+    background-color: #f0382a;
+}
+
+.navbar-cart li {
+    width: 50%;
+    float: left;
+} 
+
+.navbar-default .navbar-cart>li>a {
+    margin-top: 0; text-align:center;
+}
+ul.nav.navbar-nav.navbar-main {
+    width: 100%;
+    float: left;
+    z-index: 2;
+    position: relative;
+    margin: 0px;
+    background-color: #fff;
+    border: 7px solid #fff;
+}
+
+
+
+ul.nav.navbar-nav.navbar-main li a {
+    padding: 8px;
+    font-size: 20px;
+    margin: 10px;
+	color:#f0382a;
+}
+	
+	.carousel-inner.bg-cvr {
+    padding:0; height:auto; margin-bottom:50px;
+}
+
+.carousel-inner .item {
+    min-width: auto; padding-top:40px;
+}
+
+.caro-cap.has-image {
+    position: static;
+}
+
+.slide_bottom {
+    position: static;
+    margin-top: 140px;
+    width: -webkit-fill-available;
+}
+
+.navbar-default .navbar-nav>li>a {
+    font-size: 14px;
+}
+
+.container {
+    width: 100%;
+}
+
+a.navbar-brand {
+    width: 150px;
+}
+
+.prod__img {
+    height: 148px;
+}
+button.navbar-toggle.collapsed {
+    background-color: #f0382a;
+    margin-top: 40px;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    color: #fff;
+    background-color: #fff;
+}
+
+.carousel-inner.bg-cvr {
+    padding:0; height:auto;
+}
+
+	}
 
 
 /* iPad (All) (768x1024) Portrait Tablets */
@@ -279,7 +407,15 @@ body .swiper-button-next i {
 
 
 /*iPhone3 Landscape*/
-@media only screen and (max-width : 480px) {	}
+@media only screen and (max-width : 480px) {
+
+.prod__img{ height:200px; }
+
+.hed.lg h2 {
+    font-size: 46px;
+}
+
+	}
 
 
 /* iPhone 6 PLUS (414x736) */
