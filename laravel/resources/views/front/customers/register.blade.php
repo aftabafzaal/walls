@@ -4,23 +4,21 @@
 <?php
 $passwordPattern = Config::get('params.password_pattern');
 $required = 'required';
-//$required = '';
+$required = '';
 ?>
 
-<section class="bnr-area page-bnr-area bg-full bg-cntr valigner" style="background-image:url('{{ asset('front/images/bnr-signup.jpg') }}');">
+<section class="bnr-area page-bnr-area bg-full bg-cntr valigner">
     <div class="container">
         <div class="bnr__cont valign white text-center col-sm-12 text-uppercase anime-flipInX">
             <h2>SIGN UP</h2>
-            <h4></h4>
+            
         </div>
     </div>
 </section>
 
-
-
-<section class="inr-intro-area pt30">
+{!! Form::open(array( 'class' => 'form','url' => 'signUpPost', 'name' => 'register')) !!}
+<section class="billing-area ">
     <div class="container">
-
         @if (count($errors->register) > 0)
         <div class="alert alert-danger">
             <strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -37,12 +35,6 @@ $required = 'required';
             <h4><i class="icon fa fa-check"></i> &nbsp  {!! session('success') !!}</h4>
         </div>
         @endif
-    </div>
-</section>
-
-{!! Form::open(array( 'class' => 'form','url' => 'signUpPost', 'name' => 'register')) !!}
-<section class="billing-area ">
-    <div class="container">
 
         <div class="fom fom-shad pt20 col-sm-9 p0 pul-cntr">
 
@@ -77,39 +69,12 @@ $required = 'required';
                 </div> 
             </div>
 
-            <div class="form-group col-sm-6 clrhm">
-                <h5>{!! Form::label('gender', 'Gender *') !!}</h5>
-                <div class="inline-form">
-
-                    {!! Form::radio('gender', 'm', true) !!}
-                    {!! Form::label('Male', 'Male') !!}
-                    {!! Form::radio('gender', 'f') !!}
-                    {!! Form::label('Female', 'Female') !!}
-                </div>
-            </div>
-
-            <div class="form-group col-sm-12 clrhm">
-                <label>{!! Form::label('gender', 'Date of birth*') !!}</label>
-                <br>
-                <div class="form-group col-sm-2 pl0">
-                    {!! Form::selectRange('date',1,31,null,['class' => 'form-control',$required]) !!}
-                </div>
-
-                <div class="form-group col-sm-3">
-                    {!! Form::selectMonth('month',null, ['class' => 'form-control',$required]) !!}
-                </div>
-                <div class="form-group col-sm-2">
-                    {!! Form::selectRange('year',2016,1930,null,['class' => 'form-control',$required])!!}
-                </div>
-
-            </div>
-
             <div class="form-group col-sm-12">
-                {!! Form::text('country', null , array('placeholder'=>"Country United States (US)",'class' => 'form-control','readonly' => 'readonly',$required) ) !!}
+                {!! Form::text('country', null , array('placeholder'=>"Pakistan (PK)",'class' => 'form-control','readonly' => 'readonly',$required) ) !!}
             </div>
 
-            <div class="form-group col-sm-6">
-                <select name="state" id="state" <?php echo $required; ?> class="form-control">
+            <div class="form-group col-sm-4">
+                <select name="state" id="state" data-option="city" <?php echo $required; ?> class="form-control state">
                     <option >State *</option>
                     @foreach ($states as $state)
                     <option value="{{ $state->code }}">{{ $state->title }}</option>
@@ -117,22 +82,26 @@ $required = 'required';
                 </select>
             </div>
 
-            <div class="form-group col-sm-6">
-                {!! Form::text('city', null , array('placeholder'=>"City *",'class' => 'form-control',$required) ) !!}
+            <div class="form-group col-sm-4">
+                <select name="city" id="city" data-option="area" <?php echo $required; ?> class="form-control city">
+                    
+                </select>
             </div>
-
+            <div class="form-group col-sm-4">
+                <select name="area" id="area" <?php echo $required; ?> class="form-control">
+                </select>
+            </div>
 
             <div class="form-group col-sm-12">
-                {!! Form::text('address', null , array('placeholder'=>"Address *",'class' => 'form-control',$required) ) !!}
+                {!! Form::text('address', null , array('placeholder'=>"Complete Address *",'class' => 'form-control',$required) ) !!}
+            </div>
+            
+            <div class="form-group col-sm-6">
+                {!! Form::text('phone', null , array('placeholder'=>"Phone",'class' => 'form-control',$required) ) !!}
             </div>
 
-
             <div class="form-group col-sm-6">
-                {!! Form::text('zip', null , array('placeholder'=>"Postal Code / Zipcode *",'class' => 'form-control',$required) ) !!}
-            </div>
-
-            <div class="form-group col-sm-6">
-                {!! Form::text('phone', null , array('placeholder'=>"Phone *",'class' => 'form-control',$required) ) !!}
+                {!! Form::text('mobile', null , array('placeholder'=>"Mobile *",'class' => 'form-control',$required) ) !!}
             </div>
             <div class="form-group col-sm-6">  
                 <?php
@@ -142,7 +111,7 @@ $required = 'required';
             <div class="form-group col-sm-6 text-right">
                 <button type="submit" class="btn btn-flat btn-primary " >SIGNUP</button>
             </div>
-            	
+
             {!! Form::hidden('role_id',2) !!}
         </div>
     </div>

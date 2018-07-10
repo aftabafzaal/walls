@@ -7,249 +7,105 @@
 
 }
 
-body{font-family: "happiness", "Helvetica", "Helvetica Neue",Arial,sans-serif;}
-h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{font-family: "happiness", "Helvetica", "Helvetica Neue", Arial,sans-serif;}
+body{font-family:   "Helvetica", "Helvetica Neue",Arial,sans-serif;}
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{font-family:   "Helvetica", "Helvetica Neue", Arial,sans-serif;}
 
 
 body{
 	background-image:url('images/bg.jpg');
 }
 
-
-.pin {
-    display: inline-block;
-    width: 60px;
-    float: right;
-    position: absolute;
-    top: 30px;
-    right: 20px;
-    z-index: 40;
-}
-
-
 .hdr-nav {
-    min-height: 105px;
-    margin-bottom: 50px;
+    background-color: #fff;
+    min-height: 10px;
+    height: auto;
 }
 
+.hdr-nav .icon {
+    width: 32px;
+    display: inline-block;
+}
+a.navbar-brand {
+    height: 82px;
+    padding: 0;
+	margin-bottom:4px;
+}
+
+a.navbar-brand img {
+    height: 100%;
+}
 
 .navbar-default .navbar-nav>li>a {
-    font-size: 30px;
-    color: #fff;
-    margin-top: 28px;
+    font-size: 22px;
+    line-height: 32px;
 }
 
 .navbar-main {
-    margin-left: 20px;
+    margin-left: 60px;
+    margin-top:8px;
 }
 
-.caro-cap img {
-    width: 150px;
-    margin-left: 145px;
-}
-
-
-
-.carousel-inner.bg-cvr {
-    padding: 60px;
-    background-size: 100% 100%;
-}
-
-.carousel-inner .item {
-    width: 100%;
-    background-size: 100% 100%;
-    color: #fff; 
-     overflow: hidden;
-
-     min-height: 500px;
-}
-
-
-.slide_bottom {
-    height: 140px;
-    float: left;
-    width: 100%;
-    margin: -15px; 
-    position: absolute; bottom: 0px;
-}
-
-.slide_bottom img {
-    position: absolute;
-    bottom: 30px;
-    right: 40px;
-}
-
-
-.slider-area .container, .slider .container {
-    position: static;
-}
-
-
-section.banner-area {
-    padding-top: 80px;
-     padding-bottom:50px;
-    text-align:center;
-}
-
-section.banner-area .pin {
-       left: 50%;
-    height: 100px;
-    width: 90px;
-    top: -10px;
-}
-
-.container .container{ width:auto; }
-
-
-.hed h2 {
-    text-align: center;
-    color: #f0382a;
-    font-size: 40px;
-    margin: 40px;
-}
-
-
-.hed h2 {
-    text-align: center;
-    color: #f0382a;
-    font-size: 40px;
-    margin: 40px;
+.prod__img .__img img {
+    height: 370px;
 }
 
 .prod__img {
-    border: 2px solid #f0382a;
-    border-radius: 6px;
-    overflow: hidden;
-    height: 200px;
-     background-color: #fff;
     text-align: center;
+    padding:10px;
 }
 
-.prod__cont {
-    text-align: center;
-    padding: 30px;
-}
-
-.btn-primary {
-    background-color: #f0382a;
-    border-color: #f0382a;
-    font-size: 20px;
-    padding-top: 2px;
-    line-height: normal;
-    padding-bottom: 2px;
-}
-
-.hed.lg h2 {
-    font-size: 100px; color:#fff;
-}
-.hed.lg {
-    position: relative;
-    padding: 40px; margin-bottom:50px;
-}
-
-.hed.lg .pin.fl { left:20px; }
-
-.hed.lg .pin { top: 64px; }
-
-section.bottom-area {
-    padding: 50px;
-    color: #fff;
-    font-size: 22px;
-    padding-top: 70px;
-    font-weight: 500;
-    text-shadow: 0 1px 1px #000;
-}
-
-
-i.icon {
-    width: 32px;
-    height: 32px;
-    display: inline-block;
-}
-
-.navbar-default .navbar-brand {
-    padding: 0;
-}
-
-
-.caro-cap h2+h2 {
-    margin-left: 60px;
-} 
-
-.caro-cap h2+h2~h2 {
-    margin-left: 190px;
-}
-
-.caro-cap {
-    padding: 20px;
-}
-
-.slider-area .pin1 {
-    left: 20px;
-}
-
-.slider-area .pin.pin2 {
-    right: 25px;
-}
-
-body .swiper-button-prev,
-body .swiper-button-next {
-    width: 80px;  opacity: 1;background-size: 100% 60px;text-align: center;
-}
-
-
-body 
-.swiper-button-next{margin-right:-80px; 
-    background-image: url("images/arrow2.png");}
-
-body 
-.swiper-button-prev{margin-left:-80px; 
-    background-image: url("images/arrow.png");}
-
-body .swiper-button-prev i,
-body .swiper-button-next i {
-    background-color: #f0382a;
-    display: inline-block;
-    color: #fff;
-    padding: 10px;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    line-height: 4px;
-    margin-top: 8px;
-}
-
-.mini-cart ul.dropdown-menu {
-  
-    right: 0;
-    left: auto;
-    min-width: 330px;
-}
-
-.bundles-area .prod__img {
-    background-color: #f0382a;
-    color: #fff;
-    padding: 20px;
-}
-
-.bundles-area .prod_tag {
+.__tag {
     position: absolute;
-    top: 10px;
-    display: block;
-    left:25px; background-color:#fff;
-    color:#f0382a; padding:4px 10px; border-radius:50px;
+    bottom: 10px;
+    width: 60px;
+    height: 60px;
+    right:10px;
 }
+
+
+.prodbox .back {
+    background-color: #000;
+    opacity: .7;
+}
+
+.prodbox .back a {
+    color: #fff;
+    font-size: 24px;
+    text-align: center;
+    padding-top: 44%;
+    display: inline-block;
+    width: 100%;
+}
+.metroflip-box:hover .front {
+    transform: rotateY(360deg);
+    transition: all 1s ease-in-out !important;
+}
+
+.prod--sm .prod__img .__img img {
+    height: 290px;
+    float: right;
+}
+
+.prod__img {
+    height: 400px;
+}
+
+.prod--sm .prod__img h3{ color:#fff; text-align:left; margin:0;}
+
+.bg-blue{ background-color: #0595d4; }
+
+
+.bg-brown{ background-color: #3d1903; }
+
+.bg-purple{ background-color: #914f99; }
+
+.bg-pink { background-color: #dc3386; }
  
+.bg-green { background-color: #76b328; }
  
+.bg-yellow { background-color: #ffcf00; } 
  
- 
- 
- 
- 
- 
- 
- 
- 
+ .bg-red { background-color: #f70825; }
  
 /*==============Media Queries==============*/
 /* 24" large Screens */
@@ -272,7 +128,7 @@ body .swiper-button-next i {
 @media only screen and (max-width : 1280px) {	}
 
 
-/* 12" Notebook & iPad landscape  · width: 1024px */
+/* 12" Notebook & iPad landscape  ï¿½ width: 1024px */
 @media only screen and (max-width : 1024px) {
 
 .navbar-default .navbar-nav>li>a {
@@ -383,10 +239,10 @@ button.navbar-toggle.collapsed {
 /* Lower then iPad (All) (767x---) */
 @media only screen and (max-width : 767px) {	}
 
-/*iPhone 6 Plus landscape · width: 736px */
+/*iPhone 6 Plus landscape ï¿½ width: 736px */
 @media only screen and (max-width : 736px) {	}
 
-/*iPhone 6 landscape · width: 667px */
+/*iPhone 6 landscape ï¿½ width: 667px */
 @media only screen and (max-width : 667px) {	}
 
 
@@ -398,7 +254,7 @@ button.navbar-toggle.collapsed {
 @media only screen and (max-width : 640px) {	}
 
 
-/* iPhone 5 Landscape · 320x568px */
+/* iPhone 5 Landscape ï¿½ 320x568px */
 @media only screen and (max-width : 568px) {	}
 
 

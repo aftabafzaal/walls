@@ -11,7 +11,6 @@ $currency = Config::get('params.currency');
 @section('content')
 <section class="test-bd-area pt50 pb50" >
     <div class="container">
-        <p>Traditionally to order a lab test you have to make an appointment to see your doctor, wait in clinic waiting room with other sick patients, pay your copay, pay the doctors fee and get a surprise bill in the mail, why would you want to go through the stress?  Browse our test menu and order on demand, on your terms, it’s the 21st century.</p>
         <div class="test-menu-area table-responsive0">
 
             <h3>Shop</h3>
@@ -23,38 +22,67 @@ $currency = Config::get('params.currency');
             </style>
 
             <div class="container">
-                
-                    @if(count($products)>0)
+
+                @if(count($products)>0)
+
+                @foreach ($products as $p)
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <img src="{{ asset('uploads/categories/thumbnail')}}/<?php echo $p['image']; ?>" alt="<?php echo $p['name']; ?>" />
+
+                </div>
 
 
+                @foreach ($p['products'] as $product)
 
-
-                    @foreach ($products as $product)
-                    
-                    <div class="col-lg-4 col-md-3 col-sm-6 col-xs-4">
-                        <div class="box-customn">
-                            <div class="img-wrap-tailor">
-                                <a href="<?php echo url('product/'.$product->id);?>"><img src="{{ asset('uploads/products/thumbnail')}}/<?php echo $product->image; ?>" alt="<?php  echo $product->name; ?>" /></a>
-                                <span>View</span>
-                            </div>
-                            <div class="imfo-area">
-                                <h3><?php  echo $product->name; ?></h3>
-                                <p><?php  echo $product->teaser; ?></p>
-                                <h4> @include('front/products/price')</h4>
-                            </div>
+                <div class="prod col-lg-4 col-md-3 col-sm-6 col-xs-4">
+                    <div class="prod__inr">
+                        <a class="btn btn-primary" href="<?php echo url('product/' . $product->id); ?>"><img src="{{ asset('uploads/products/thumbnail')}}/<?php echo $product->image; ?>" alt="<?php echo $product->name; ?>" /></a>
+                        <div class="imfo-area">
+                            <h3><?php echo $product->name; ?></h3>
+                            <p><?php echo $product->teaser; ?></p>
+                            <h4> @include('front/products/price')</h4>
                         </div>
+
+                        <div class="prod__cont">
+                            <a class="btn btn-primary" onclick="AddToCart(<?php echo $product->id; ?>)">BUY</a>
+                        </div>
+
                     </div>
-                    @endforeach
+                </div>
+                @endforeach
+
+                @endforeach
 
 
-                    @else
-                    <div class="warning">Sorry, there is no results for your search</div>
-                    @endif
+                @else
+                <div class="warning">Sorry, there is no results for your search</div>
+                @endif
 
             </div>
         </div>
     </div>
 </section>          
+<script>
+    function AddToCart(product_id) {
 
+        var form = {product_id: product_id, quantity: 1};
+        var jqxhr = $.get("{{url('cart/add')}}", form, function () {
+            $("#mini_cart").html("")
+            minicart();
+            // window.location = "cart/view";
+
+        })
+                .done(function () {
+                    //alert( "second success" );
+                })
+                .fail(function () {
+                    //alert( "error" );
+                })
+                .always(function () {
+                    //alert( "finished" );
+                });
+
+    }
+</script>
 
 @endsection

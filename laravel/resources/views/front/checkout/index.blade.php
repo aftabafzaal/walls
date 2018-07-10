@@ -32,40 +32,47 @@ $required = "'required'";
                                 {!! Form::label('Last Name') !!}
                                 {!! Form::text('billingLastName', $user->lastName , array('class' => 'form-control',$required) ) !!}
                             </div>
-                            <div class="form-group col-sm-6">
+                            <div class="form-group col-sm-12">
                                 {!! Form::label('email') !!}
                                 {!! Form::text('billingEmail',  $user->email , array('class' => 'form-control',$required) ) !!}
                             </div>
-                            <div class="form-group col-sm-6">
-                                {!! Form::label('state') !!}
-                                <select <?php echo $required ?> class="form-control" name="billingState" id="billingState">
-                                    <option value="">State / Region</option>
+
+
+                            <div class="form-group col-sm-4">
+                                <select name="billingState" id="billingState" data-option="billingCity" <?php echo $required; ?> class="form-control state">
+                                    <option >State *</option>
                                     @foreach ($states as $state)
-                                    <option value="{{ $state->code }}"
-                                            @if($state->code == $address->state) selected @endif> {{ $state->title }}</option>
+                                    <option value="{{ $state->code }}">{{ $state->title }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group col-sm-6">
-                                {!! Form::label('city') !!}
-                                {!! Form::text('billingCity', $address->city , array('class' => 'form-control',$required) ) !!}
+
+                            <div class="form-group col-sm-4">
+                                <select name="billingCity" id="billingCity" data-option="billingArea" <?php echo $required; ?> class="form-control city">
+
+                                </select>
                             </div>
+                            
+                            <div class="form-group col-sm-4">
+                                <select name="billingArea" id="billingArea" <?php echo $required; ?> class="form-control">
+                                </select>
+                            </div>
+                            
                             <div class="form-group col-sm-12">
-                                {!! Form::label('address line 1') !!}
+                                {!! Form::label('address') !!}
                                 {!! Form::text('billingAddress1', $address->address , array('class' => 'form-control',$required) ) !!}
                             </div>
-                            <div class="form-group col-sm-12">
-                                {!! Form::label('address line 2') !!}
-                                {!! Form::text('billingAddress2', null , array('class' => 'form-control','') ) !!}
-                            </div>
-                            <div class="form-group col-sm-6">
-                                {!! Form::label('Zip') !!}
-                                {!! Form::text('billingZip', $address->zip , array('class' => 'form-control',$required) ) !!}
-                            </div>
+                            
                             <div class="form-group col-sm-6">
                                 {!! Form::label('phone') !!}
                                 {!! Form::text('billingPhone', $address->phone , array('class' => 'form-control',$required) ) !!}
                             </div>
+                            
+                            <div class="form-group col-sm-6">
+                                {!! Form::label('mobile') !!}
+                                {!! Form::text('billingMobile', $address->mobile , array('class' => 'form-control',$required) ) !!}
+                            </div>
+                            
                             <div class="form-group col-sm-12 brackets--no">
                                 {!! Form::checkbox('isShippingDifferent',1,false,['id'=>'is_shipping_different']); !!}
                                 Shipping address is different from billing. 
@@ -81,45 +88,38 @@ $required = "'required'";
                                 {!! Form::label('lastName') !!}
                                 {!! Form::text('shippingLastName', $user->lastName , array('class' => 'form-control','') ) !!}
                             </div>
-                            <div class="form-group col-sm-6">
-                                {!! Form::label('country', 'Country *') !!}
-                                <select name="shippingCountry" id="shippingCountry" class="form-control">
-                                    <option >Country *</option>
-                                    @foreach($countries as $country)
-                                    <option value="{{ $country->id }}"
-                                            @if($country->id== $address->country) selected @endif > {{ $country->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group col-sm-6">
-                                {!! Form::label('state') !!}
-                                <select <?php echo $required ?> class="form-control" name="shippingState" id="shippingState">
-                                    <option value="">State / Region</option>
+                            <div class="form-group col-sm-4">
+                                <select name="shippingState" id="shippingState" data-option="shippingCity" <?php echo $required; ?> class="form-control state">
+                                    <option >State *</option>
                                     @foreach ($states as $state)
-                                    <option value="{{ $state->id }}"
-                                            @if($state->code == $address->state) selected @endif> {{ $state->name }}</option>
+                                    <option value="{{ $state->code }}">{{ $state->title }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group col-sm-6">
-                                {!! Form::label('city') !!}
-                                {!! Form::text('shippingCity', $address->city , array('class' => 'form-control','') ) !!}
+
+                            <div class="form-group col-sm-4">
+                                <select name="shippingCity" id="shippingCity" data-option="shippingArea" <?php echo $required; ?> class="form-control city">
+
+                                </select>
                             </div>
+                            
+                            <div class="form-group col-sm-4">
+                                <select name="shippingArea" id="shippingArea" <?php echo $required; ?> class="form-control">
+                                </select>
+                            </div>
+                            
                             <div class="form-group col-sm-6">
                                 {!! Form::label('address line 1') !!}
                                 {!! Form::text('shippingAddress1', $address->address , array('class' => 'form-control','') ) !!}
                             </div>
-                            <div class="form-group col-sm-6">
-                                {!! Form::label('address line 2') !!}
-                                {!! Form::text('shippingAddress2', null , array('class' => 'form-control','') ) !!}
-                            </div>
-                            <div class="form-group col-sm-6">
-                                {!! Form::label('zip') !!}
-                                {!! Form::text('shippingZip', $address->phone , array('class' => 'form-control',$required) ) !!}
-                            </div>
+                            
                             <div class="form-group col-sm-6">
                                 {!! Form::label('phone') !!}
                                 {!! Form::text('shippingPhone', $address->phone , array('class' => 'form-control',$required) ) !!}
+                            </div>
+                            <div class="form-group col-sm-6">
+                                {!! Form::label('mobile') !!}
+                                {!! Form::text('shippingMobile', $address->mobile , array('class' => 'form-control',$required) ) !!}
                             </div>
                         </div>
 
@@ -222,32 +222,6 @@ $required = "'required'";
             $('#billingState').html(html);
         });
     }
-//    function getCities(stateId) {
-//        var cityId = '<?php echo $address->city; ?>';
-//        $.ajax({
-//            type: "GET",
-//            url: "<?php echo url('/city/get/'); ?>/" + stateId,
-//            data: "",
-//            async: true
-//        }).success(function (val) {
-//            var response = JSON.parse(val);
-//            if (response.length > 0) {
-//                var html1 = "<option value=''>Select your city</option>";
-//                for (key in response) { 
-//                    if (cityId == response[key].id) {
-//                        html1 += "<option value='" + response[key].id + "' selected>" + response[key].name + "</option>";
-//                    } else {
-//                        html1 += "<option value='" + response[key].id + "'>" + response[key].name + "</option>";
-//                    }
-//
-//                }
-//            } else {
-//                html1 += "<option value=''>Select state first</option> ";
-//            }
-//            $('#city').html(html1);
-//        });
-//
-//    }
 
 </script>  
 @endsection

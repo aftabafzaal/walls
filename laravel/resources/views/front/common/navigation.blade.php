@@ -1,5 +1,5 @@
 <header>
-    <section class="hdr-area  hdr-nav  bg-cvr" style="background-image:url('{{ asset('front/images/header.png') }}')">
+    <section class="hdr-area  hdr-nav">
         <div class="container">
             <nav class="navbar navbar-default" role="navigation" id="slide-nav">
                 <div class="container-fluid">
@@ -47,10 +47,10 @@
                                 }
                                 ?>
                                 <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" ><i class="icon"><img src="{{ asset('front/images/icon-cart.png') }}" alt="" /></i></a>
-                                    <ul>
-                                    <li class="cart-item" id="mini_cart">
+                                    <ul class="dropdown-menu">
+										<li class="cart-item" id="mini_cart">
 
-                                    </li>
+										</li>
                                     </ul>
                                 </li>
                             </ul>

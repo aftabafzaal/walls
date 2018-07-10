@@ -25,7 +25,7 @@ $orderPrefix = Config::get('params.order_prefix');
             <thead>
                 <tr>
                     <td>Id</td>
-                    <td>Patient Name</td>
+                    <td> Name</td>
                     <td>Added</td>
                     <td>Total</td>
                     <td></td>                                    
@@ -35,7 +35,7 @@ $orderPrefix = Config::get('params.order_prefix');
                 @foreach($orders as $order)
                 <tr>
                     <td><?php echo $orderPrefix; ?>{{$order->id}}</td>
-                    <td>{{ $order->firstName. ' '.$order->lastName }}</td>
+                    <td>{{ $order->billingFirstName. ' '.$order->billingLastName }}</td>
                     <td>{{ date('d M Y h:i a',strtotime($order->created_at))}}</td>
                     <td>{{ $currency[Config::get('params.currency_default')]['symbol']}}{{ $order->grandTotal}}</td>
                     <td><a href="order/{{$order->id}}">Detail</a></td>                                    
